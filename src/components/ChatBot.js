@@ -41,7 +41,7 @@ export default function ChatBot() {
       );
     }
 
-    const { answer, slokas, intents } = data;
+  const { answer, slokas } = data;
     const intentUsed = answer?.intent_used || "general";
     const config = getIntentConfig(intentUsed);
 

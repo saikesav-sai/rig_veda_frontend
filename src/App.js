@@ -1,21 +1,17 @@
 
-import { useState } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import ChatBot from "./components/ChatBot";
 import SemanticSearch from "./components/SemanticSearch";
 import VedaExplorer from "./components/VedaExplorer";
-import Hero from "./components/Hero";
+import Hero from "./components/hero";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("home"); // home, search, chat, explorer
-
-  const navigateToPage = (page) => {
-    setCurrentPage(page);
-  };
-
-  const goHome = () => {
-    setCurrentPage("home");
-  };
+  const navigate = useNavigate();
+  const navigateToPage = (page) => navigate(page === 'home' ? '/' : `/${page}`);
+  const goHome = () => navigate('/');
+  const location = useLocation();
+  const currentPage = location.pathname === '/' ? 'home' : location.pathname.replace(/^\//, '');
 
   const navButtonStyle = {
     padding: "1rem 2rem",
@@ -39,13 +35,13 @@ function App() {
     boxShadow: "0 8px 25px rgba(0,0,0,0.2)"
   };
 
-  // 🏠 Home Page Component (now powered by the new Hero component)
+  // // 🏠 Home Page Component (now powered by the new Hero component)
   const renderHomePage = () => (
     <div style={{ textAlign: "center", maxWidth: "1200px", margin: "0 auto", padding: "2rem 1.5rem" }}>
       <Hero navigateToPage={navigateToPage} />
 
       {/* Keep a compact features strip below the hero */}
-      <div style={{ marginTop: "-80px", position: "relative", zIndex: 40 }}>
+  <div style={{ marginTop: "-32px", position: "relative", zIndex: 40 }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.25rem" }}>
           <div onClick={() => navigateToPage("search")} className="card-hover" style={{ background: "white", padding: "2rem", borderRadius: "14px", boxShadow: "0 10px 30px rgba(15,23,42,0.06)", cursor: "pointer" }}>
             <h4 style={{ marginBottom: ".5rem", color: "#334155" }}>🔍 Semantic Search</h4>
@@ -216,40 +212,39 @@ function App() {
         </div>
       </header>
       {/* Page Content */}
-      {currentPage === "home" && renderHomePage()}
-      
-      {currentPage === "search" && (
-        <main style={{ 
-          maxWidth: "1200px", 
-          margin: "auto", 
-          padding: "3rem 2rem",
-          animation: "fadeIn 0.6s ease-out"
-        }}>
-          <SemanticSearch />
-        </main>
-      )}
-      
-      {currentPage === "chat" && (
-        <main style={{ 
-          maxWidth: "1200px", 
-          margin: "auto", 
-          padding: "3rem 2rem",
-          animation: "fadeIn 0.6s ease-out"
-        }}>
-          <ChatBot />
-        </main>
-      )}
-      
-      {currentPage === "explorer" && (
-        <main style={{ 
-          maxWidth: "1200px", 
-          margin: "auto", 
-          padding: "3rem 2rem",
-          animation: "fadeIn 0.6s ease-out"
-        }}>
-          <VedaExplorer />
-        </main>
-      )}
+      <Routes>
+        <Route path="/" element={renderHomePage()} />
+        <Route path="/search" element={
+          <main style={{ 
+            maxWidth: "1200px", 
+            margin: "auto", 
+            padding: "3rem 2rem",
+            animation: "fadeIn 0.6s ease-out"
+          }}>
+            <SemanticSearch />
+          </main>
+        } />
+        <Route path="/chat" element={
+          <main style={{ 
+            maxWidth: "1200px", 
+            margin: "auto", 
+            padding: "3rem 2rem",
+            animation: "fadeIn 0.6s ease-out"
+          }}>
+            <ChatBot />
+          </main>
+        } />
+        <Route path="/explorer" element={
+          <main style={{ 
+            maxWidth: "1200px", 
+            margin: "auto", 
+            padding: "3rem 2rem",
+            animation: "fadeIn 0.6s ease-out"
+          }}>
+            <VedaExplorer />
+          </main>
+        } />
+      </Routes>
     </div>
   );
 }

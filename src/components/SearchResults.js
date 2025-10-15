@@ -11,7 +11,7 @@ export default function SearchResults({ results, onBack }) {
   if (!results) return null;
 
   // Handle both old ChatBot format and new semantic search format
-  const { answer, slokas, intents, verses, summary, query, searchMetadata } = results;
+  const { answer, slokas, verses, summary } = results;
   
   // Use verses if slokas is not available (semantic search format)
   const displayVerses = slokas || verses || [];
