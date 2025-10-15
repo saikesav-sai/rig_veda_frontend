@@ -1,4 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
@@ -21,3 +20,20 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Editor directories and local files
+.vscode/
+.idea/
+
+# Caches
+.cache/
+
+# Next/other frameworks (if added later)
+.next/
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Local lockfile management: keep lockfiles checked in by default but uncomment to ignore
+# package-lock.json
+# yarn.lock
