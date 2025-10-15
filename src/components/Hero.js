@@ -1,5 +1,3 @@
-import SemanticSearch from './SemanticSearch';
-
 export default function Hero({ navigateToPage }) {
   return (
     <section className="hero-root">
@@ -28,11 +26,8 @@ export default function Hero({ navigateToPage }) {
         <h1 className="hero-title gradient-text">Rig Veda Explorer</h1>
         <p className="hero-subtitle">Explore ancient hymns with modern AI — search by meaning, ask questions, and listen to recitations.</p>
 
-        <div className="hero-search">
-          <SemanticSearch onResults={(r) => { if (r && r.intent === 'semantic_search') navigateToPage('search'); }} />
-        </div>
-
-        <div className="hero-ctas">
+        <div className="hero-actions" style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', marginTop: '1rem' }}>
+          <button className="cta-pill" onClick={() => navigateToPage('search')}>Search the Veda</button>
           <button className="cta-pill" onClick={() => navigateToPage('explorer')}>Browse Mandalas</button>
           <button className="cta-pill ghost" onClick={() => navigateToPage('chat')}>Ask the Veda</button>
         </div>
