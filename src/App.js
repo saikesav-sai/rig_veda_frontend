@@ -445,220 +445,109 @@ function App() {
     }}>
       {/* Header */}
       <header style={{ 
-        background: currentPage === "home" 
-          ? "linear-gradient(135deg, rgba(30, 27, 75, 0.05) 0%, rgba(76, 29, 149, 0.05) 100%)"
-          : "linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)",
-        color: currentPage === "home" ? "#1e1b4b" : "white",
-        padding: currentPage === "home" ? "1.5rem 0" : "1.5rem 0",
-        boxShadow: currentPage === "home" 
-          ? "0 2px 10px rgba(0,0,0,0.05)"
-          : "0 8px 32px rgba(102, 126, 234, 0.3)",
+        background: "linear-gradient(135deg, rgba(30, 27, 75, 0.05) 0%, rgba(76, 29, 149, 0.05) 100%)",
+        color: "#1e1b4b",
+        padding: "1.5rem 0",
+        boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
         position: "sticky",
         top: 0,
         zIndex: 100,
-        backdropFilter: currentPage === "home" ? "blur(10px)" : "none",
-        borderBottom: currentPage === "home" ? "1px solid rgba(0,0,0,0.05)" : "none"
+        backdropFilter: "blur(10px)",
+        borderBottom: "1px solid rgba(0,0,0,0.05)"
       }}>
         <div style={{ maxWidth: "1400px", margin: "auto", padding: "0 2rem" }}>
-          {currentPage === "home" ? (
-            // Home Header - Minimalist
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center"
-            }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                <span style={{ fontSize: "2rem" }}>🕉️</span>
-                <h1 style={{ 
-                  fontSize: "1.5rem", 
-                  margin: 0,
-                  fontWeight: "700",
-                  letterSpacing: "-0.5px"
-                }}>
-                  Rig Veda Explorer
-                </h1>
-              </div>
-              <div style={{ display: "flex", gap: "1rem" }}>
-                <button
-                  onClick={() => navigateToPage("search")}
-                  style={{
-                    padding: "0.6rem 1.2rem",
-                    fontSize: "0.95rem",
-                    fontWeight: "600",
-                    background: "white",
-                    color: "#667eea",
-                    border: "2px solid #e2e8f0",
-                    borderRadius: "50px",
-                    cursor: "pointer",
-                    transition: "all 0.3s ease"
-                  }}
-                >
-                  Search
-                </button>
-                <button
-                  onClick={() => navigateToPage("chat")}
-                  style={{
-                    padding: "0.6rem 1.2rem",
-                    fontSize: "0.95rem",
-                    fontWeight: "600",
-                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "50px",
-                    cursor: "pointer",
-                    transition: "all 0.3s ease",
-                    boxShadow: "0 4px 15px rgba(102, 126, 234, 0.3)"
-                  }}
-                >
-                  AI Guide
-                </button>
-              </div>
+          <div style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: "1rem"
+          }}>
+            {/* Logo/Title */}
+            <div 
+              onClick={goHome}
+              style={{ 
+                display: "flex", 
+                alignItems: "center", 
+                gap: "1rem",
+                cursor: "pointer",
+                transition: "all 0.3s ease"
+              }}
+            >
+              <span style={{ fontSize: "2rem" }}>🕉️</span>
+              <h1 style={{ 
+                fontSize: "1.5rem", 
+                margin: 0,
+                fontWeight: "700",
+                letterSpacing: "-0.5px"
+              }}>
+                Rig Veda Explorer
+              </h1>
             </div>
-          ) : (
-            // Page Header with Navigation
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexWrap: "wrap",
-              gap: "1rem"
-            }}>
+
+            {/* Navigation Buttons */}
+            <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
               <button
-                onClick={goHome}
+                onClick={() => navigateToPage("search")}
                 style={{
-                  ...navButtonStyle,
-                  fontSize: "1rem",
-                  padding: "0.75rem 1.5rem"
-                }}
-                onMouseOver={(e) => {
-                  Object.assign(e.target.style, navButtonHoverStyle, { fontSize: "1rem", padding: "0.75rem 1.5rem" });
-                }}
-                onMouseOut={(e) => {
-                  Object.assign(e.target.style, navButtonStyle, { fontSize: "1rem", padding: "0.75rem 1.5rem" });
+                  padding: "0.6rem 1.2rem",
+                  fontSize: "0.95rem",
+                  fontWeight: "600",
+                  background: currentPage === "search" ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" : "white",
+                  color: currentPage === "search" ? "white" : "#667eea",
+                  border: currentPage === "search" ? "none" : "2px solid #e2e8f0",
+                  borderRadius: "50px",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  boxShadow: currentPage === "search" ? "0 4px 15px rgba(102, 126, 234, 0.3)" : "none"
                 }}
               >
-                🏠 Home
+                🔍 Search
               </button>
-              
-              <h1 style={{
-                fontSize: "2rem",
-                fontWeight: "300",
-                letterSpacing: "1px",
-                textAlign: "center",
-                flex: 1
-              }}>
-                🕉️ Rig Veda Explorer
-              </h1>
-              
-              <div style={{ 
-                display: "flex", 
-                gap: "1rem",
-                flexWrap: "wrap"
-              }}>
-                <button
-                  onClick={() => navigateToPage("search")}
-                  style={{
-                    ...navButtonStyle,
-                    background: currentPage === "search" ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.1)",
-                    fontSize: "0.9rem",
-                    padding: "0.6rem 1.2rem"
-                  }}
-                  onMouseOver={(e) => {
-                    Object.assign(e.target.style, navButtonHoverStyle, { fontSize: "0.9rem", padding: "0.6rem 1.2rem" });
-                  }}
-                  onMouseOut={(e) => {
-                    Object.assign(e.target.style, {
-                      ...navButtonStyle,
-                      background: currentPage === "search" ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.1)",
-                      fontSize: "0.9rem",
-                      padding: "0.6rem 1.2rem"
-                    });
-                  }}
-                >
-                  🔍 Search
-                </button>
-                <button
-                  onClick={() => navigateToPage("chat")}
-                  style={{
-                    ...navButtonStyle,
-                    background: currentPage === "chat" ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.1)",
-                    fontSize: "0.9rem",
-                    padding: "0.6rem 1.2rem"
-                  }}
-                  onMouseOver={(e) => {
-                    Object.assign(e.target.style, navButtonHoverStyle, { fontSize: "0.9rem", padding: "0.6rem 1.2rem" });
-                  }}
-                  onMouseOut={(e) => {
-                    Object.assign(e.target.style, {
-                      ...navButtonStyle,
-                      background: currentPage === "chat" ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.1)",
-                      fontSize: "0.9rem",
-                      padding: "0.6rem 1.2rem"
-                    });
-                  }}
-                >
-                  🕉️ Chat
-                </button>
-                <button
-                  onClick={() => navigateToPage("explorer")}
-                  style={{
-                    ...navButtonStyle,
-                    background: currentPage === "explorer" ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.1)",
-                    fontSize: "0.9rem",
-                    padding: "0.6rem 1.2rem"
-                  }}
-                  onMouseOver={(e) => {
-                    Object.assign(e.target.style, navButtonHoverStyle, { fontSize: "0.9rem", padding: "0.6rem 1.2rem" });
-                  }}
-                  onMouseOut={(e) => {
-                    Object.assign(e.target.style, {
-                      ...navButtonStyle,
-                      background: currentPage === "explorer" ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.1)",
-                      fontSize: "0.9rem",
-                      padding: "0.6rem 1.2rem"
-                    });
-                  }}
-                >
-                  📚 Explorer
-                </button>
-              </div>
+              <button
+                onClick={() => navigateToPage("chat")}
+                style={{
+                  padding: "0.6rem 1.2rem",
+                  fontSize: "0.95rem",
+                  fontWeight: "600",
+                  background: currentPage === "chat" ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" : "white",
+                  color: currentPage === "chat" ? "white" : "#667eea",
+                  border: currentPage === "chat" ? "none" : "2px solid #e2e8f0",
+                  borderRadius: "50px",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  boxShadow: currentPage === "chat" ? "0 4px 15px rgba(102, 126, 234, 0.3)" : "none"
+                }}
+              >
+                AI Guide
+              </button>
+              <button
+                onClick={() => navigateToPage("explorer")}
+                style={{
+                  padding: "0.6rem 1.2rem",
+                  fontSize: "0.95rem",
+                  fontWeight: "600",
+                  background: currentPage === "explorer" ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" : "white",
+                  color: currentPage === "explorer" ? "white" : "#667eea",
+                  border: currentPage === "explorer" ? "none" : "2px solid #e2e8f0",
+                  borderRadius: "50px",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  boxShadow: currentPage === "explorer" ? "0 4px 15px rgba(102, 126, 234, 0.3)" : "none"
+                }}
+              >
+                Explorer
+              </button>
             </div>
-          )}
+          </div>
         </div>
       </header>
       {/* Page Content */}
       <Routes>
         <Route path="/" element={renderHomePage()} />
-        <Route path="/search" element={
-          <main style={{ 
-            maxWidth: "1200px", 
-            margin: "auto", 
-            padding: "3rem 2rem",
-            animation: "fadeIn 0.6s ease-out"
-          }}>
-            <SemanticSearch />
-          </main>
-        } />
-        <Route path="/chat" element={
-          <main style={{ 
-            maxWidth: "1200px", 
-            margin: "auto", 
-            padding: "3rem 2rem",
-            animation: "fadeIn 0.6s ease-out"
-          }}>
-            <ChatBot />
-          </main>
-        } />
-        <Route path="/explorer" element={
-          <main style={{ 
-            maxWidth: "1200px", 
-            margin: "auto", 
-            padding: "3rem 2rem",
-            animation: "fadeIn 0.6s ease-out"
-          }}>
-            <VedaExplorer />
-          </main>
-        } />
+        <Route path="/search" element={<SemanticSearch />} />
+        <Route path="/chat" element={<ChatBot />} />
+        <Route path="/explorer" element={<VedaExplorer />} />
       </Routes>
     </div>
   );
