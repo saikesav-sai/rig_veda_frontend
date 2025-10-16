@@ -14,28 +14,6 @@ function App() {
   const location = useLocation();
   const currentPage = location.pathname === '/' ? 'home' : location.pathname.replace(/^\//, '');
 
-  const navButtonStyle = {
-    padding: "1rem 2rem",
-    cursor: "pointer",
-    fontSize: "1.1rem",
-    fontWeight: "600",
-    border: "2px solid rgba(255,255,255,0.3)",
-    background: "rgba(255,255,255,0.1)",
-    color: "white",
-    borderRadius: "16px",
-    transition: "all 0.3s ease",
-    backdropFilter: "blur(10px)",
-    textTransform: "uppercase",
-    letterSpacing: "1px"
-  };
-
-  const navButtonHoverStyle = {
-    ...navButtonStyle,
-    background: "rgba(255,255,255,0.2)",
-    transform: "translateY(-2px)",
-    boxShadow: "0 8px 25px rgba(0,0,0,0.2)"
-  };
-
   // 🏠 Fully Redesigned Home Page
   const renderHomePage = () => (
     <div style={{ 

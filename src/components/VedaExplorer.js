@@ -274,15 +274,13 @@ export default function VedaExplorer() {
           <h2 style={{ 
             fontSize: "3.5rem", 
             fontWeight: "700", 
-            background: "linear-gradient(135deg, #1e1b4b 0%, #4c1d95 50%, #6b21a8 100%)", 
-            WebkitBackgroundClip: "text", 
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+            
+            color: "#1e1b4b",
             marginBottom: "1rem",
             letterSpacing: "-1px",
             lineHeight: "1.2"
           }}>
-            📖 Rig Veda Explorer
+            Rig Veda Explorer
           </h2>
           <p style={{ color: "#475569", fontSize: "1.2rem", lineHeight: "1.6", fontWeight: "400" }}>
             Navigate through sacred verses using traditional indexing
@@ -359,46 +357,49 @@ export default function VedaExplorer() {
 
         {inputMode === "guided" ? (
           <>
-            {/* Progress Stepper - Sticky with Glass Effect */}
+            {/* Progress Stepper - Compact Sticky Bar */}
             <div style={{ 
               position: "sticky", 
-              top: "1rem", 
-              zIndex: 100,
-              background: "rgba(255, 255, 255, 0.85)", 
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
-              borderRadius: "24px", 
-              padding: "2rem", 
-              boxShadow: "0 10px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(255,255,255,0.5)", 
+              top: "5rem", 
+              width : "50%",
+              zIndex: 99,
+              background: "rgba(255, 255, 255, 0.57)", 
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              borderRadius: "16px", 
+              padding: "2rem 1.5rem", 
+              margin: "2rem auto",
+              boxShadow: "0 6px 25px rgba(0, 0, 0, 0.41)", 
               marginBottom: "2rem",
-              border: "1px solid rgba(255, 255, 255, 0.3)"
+              border: "1px solid rgba(102, 126, 234, 0.2)"
             }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem" }}>
                 {[
                   { num: 1, label: "Mandala", icon: "📚" },
                   { num: 2, label: "Sukta", icon: "🎵" },
                   { num: 3, label: "Mantra", icon: "📝" } 
                 ].map((step, idx) => (
                   <div key={step.num} style={{ flex: 1, display: "flex", alignItems: "center" }}>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: 1 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flex: 1 }}>
                       <div style={{ 
-                        width: "50px", height: "50px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+                        width: "40px", height: "40px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
                         background: getCurrentStep() > step.num ? "linear-gradient(135deg, #10b981 0%, #059669 100%)" : 
                                     getCurrentStep() === step.num ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" : "#e5e7eb",
-                        color: getCurrentStep() >= step.num ? "white" : "#9ca3af", fontSize: "1.5rem", fontWeight: "700",
-                        transition: "all 0.3s", boxShadow: getCurrentStep() === step.num ? "0 4px 20px rgba(102, 126, 234, 0.4)" : "none"
+                        color: getCurrentStep() >= step.num ? "white" : "#9ca3af", fontSize: "1.2rem", fontWeight: "700",
+                        transition: "all 0.3s", boxShadow: getCurrentStep() === step.num ? "0 4px 15px rgba(102, 126, 234, 0.4)" : "none",
+                        flexShrink: 0
                       }}>
                         {getCurrentStep() > step.num ? <FaCheck /> : step.icon}
                       </div>
-                      <span style={{ marginTop: "0.5rem", fontSize: "0.9rem", fontWeight: "600",
+                      <span style={{ fontSize: "0.85rem", fontWeight: "600",
                         color: getCurrentStep() >= step.num ? "#1e1b4b" : "#9ca3af" }}>
                         {step.label}
                       </span>
                     </div>
                     {idx < 2 && (
                       <div style={{ 
-                        height: "3px", flex: 1, background: getCurrentStep() > step.num ? "#10b981" : "#e5e7eb",
-                        transition: "all 0.3s", marginBottom: "2rem"
+                        height: "3px", width: "60px", background: getCurrentStep() > step.num ? "#10b981" : "#e5e7eb",
+                        transition: "all 0.3s", flexShrink: 0, margin: "0 0.5rem"
                       }} />
                     )}
                   </div>
