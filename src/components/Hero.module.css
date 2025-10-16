@@ -107,12 +107,6 @@
   width: 380px;
   height: 380px;
   transform-origin: center;
-  animation: rotor 18s linear infinite;
-}
-
-@keyframes rotor {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
