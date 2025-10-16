@@ -255,3 +255,187 @@ button:focus-visible, input:focus-visible {
     color: #fff;
   }
 }
+
+/* 📚 Mandala Book Animations */
+.mandala-book {
+  animation: book-float 3s ease-in-out infinite;
+  animation-delay: calc(var(--book-index, 0) * 0.1s);
+}
+
+.mandala-book:hover .book-cover {
+  transform: rotateY(-15deg) translateZ(20px);
+  box-shadow: 
+    0 25px 50px rgba(102, 126, 234, 0.5),
+    -10px 0 30px rgba(102, 126, 234, 0.3) !important;
+}
+
+@keyframes book-float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% { 
+    transform: translateY(-5px) rotate(1deg);
+  }
+}
+
+/* Enhanced Button Effects */
+button {
+  position: relative;
+  overflow: hidden;
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+button:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+button:not(:disabled):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25) !important;
+}
+
+button:not(:disabled):active {
+  transform: translateY(-1px);
+  transition: transform 0.1s ease;
+}
+
+/* Shimmer Effect for Primary Buttons */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.btn-shimmer {
+  background: linear-gradient(
+    90deg,
+    #667eea 0%,
+    #764ba2 40%,
+    #ffffff 50%,
+    #764ba2 60%,
+    #667eea 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* Emoji Enhancement - More realistic */
+button:hover [style*="font-size"] {
+  display: inline-block;
+  animation: emoji-bounce 0.5s ease;
+}
+
+@keyframes emoji-bounce {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.2) rotate(-5deg); }
+  75% { transform: scale(1.2) rotate(5deg); }
+}
+
+/* Glass Morphism Enhancement */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Floating Elements */
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.float-animation {
+  animation: float-gentle 4s ease-in-out infinite;
+}
+
+/* Glow Pulse for Selected Items */
+@keyframes glow-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(245, 158, 11, 0.8),
+                0 0 60px rgba(245, 158, 11, 0.4);
+  }
+}
+
+/* Homepage Redesign Animations */
+@keyframes rotate-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Enhanced Card Hover for Feature Cards */
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 70px rgba(0,0,0,0.25) !important;
+}
+
+/* Gradient Text Animation */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #667eea);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Stat Number Animation */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Button Pulse Effect */
+@keyframes button-pulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+  50% { box-shadow: 0 8px 35px rgba(0,0,0,0.3); }
+}
+
+/* Feature Card Icon Float */
+.card-hover div:first-child {
+  transition: transform 0.3s ease;
+}
+
+.card-hover:hover div:first-child {
+  transform: translateY(-10px) scale(1.1);
+}
+
+/* CTA Button Enhancements */
+button.btn-shimmer:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3) !important;
+  animation: button-pulse 2s ease infinite;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .card-hover {
+    padding: 2rem 1.5rem !important;
+  }
+  
+  .card-hover h3 {
+    font-size: 1.5rem !important;
+  }
+}

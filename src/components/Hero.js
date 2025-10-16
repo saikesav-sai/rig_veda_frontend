@@ -1,38 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './Hero.module.css';
 
-const INSIGHTS = [
-  {
-    id: 1,
-    title: 'Dawn Hymns — Agni & Ushas',
-    snippet: 'Search “dawn” to find hymns invoking Ushas and the dawn’s light as a cosmic force.'
-  },
-  {
-    id: 2,
-    title: 'Fire & Ritual',
-    snippet: 'Try “fire” or “sacrifice” for core ritual passages and references to Agni.'
-  },
-  {
-    id: 3,
-    title: 'Cosmic Order (Rta)',
-    snippet: 'Explore verses about Rta — the principle of natural order and truth.'
-  }
-];
-
 export default function Hero({ navigateToPage }) {
-  const [index, setIndex] = useState(0);
-  const [reduceMotion, setReduceMotion] = useState(false);
-
-  useEffect(() => {
+  const [reduceMotion] = useState(() => {
     const mq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
-    const isReduced = mq ? mq.matches : false;
-    setReduceMotion(isReduced);
-
-    if (isReduced) return undefined; // do not start carousel
-
-    const t = setInterval(() => setIndex((i) => (i + 1) % INSIGHTS.length), 4200);
-    return () => clearInterval(t);
-  }, []);
+    return mq ? mq.matches : false;
+  });
 
   return (
     <section className={styles.heroRoot} aria-label="Rig Veda Explorer hero">
@@ -59,21 +32,21 @@ export default function Hero({ navigateToPage }) {
       </div>
 
       <div className={styles.heroContent}>
-        <h1 className={styles.heroTitle}>Rig Veda Explorer</h1>
-        <p className={styles.heroSubtitle}>One beautiful place to search meaning, hear recitations, and discover verses that mattered to the ancients.</p>
+        <h1 className={styles.heroTitle}>
+          {/* <span className={styles.vedaIcon}>📚</span> */}
+          Rig Veda Explorer
+        </h1>
+        <p className={styles.heroSubtitle}>Discover the ancient wisdom, hear sacred recitations, and explore timeless verses from the world's oldest scripture</p>
 
         <div className={styles.heroActions}>
-          <button className={styles.ctaPrimary} onClick={() => navigateToPage('search')}>Search the Veda</button>
-          <button className={styles.ctaGhost} onClick={() => navigateToPage('explorer')}>Browse Mandalas</button>
-        </div>
-
-        <div className={styles.insightCard} aria-live="polite">
-          <h4 className={styles.insightTitle}>{INSIGHTS[index].title}</h4>
-          <p className={styles.insightSnippet}>{INSIGHTS[index].snippet}</p>
-          <div className={styles.insightActions}>
-            <button className={styles.small} onClick={() => navigateToPage('search')}>Explore related</button>
-            <button className={styles.smallGhost} onClick={() => navigateToPage('chat')}>Ask about this</button>
-          </div>
+          <button className={`${styles.ctaPrimary} ${styles.btnShine}`} onClick={() => navigateToPage('search')}>
+            <span className={styles.btnIcon}>🔍</span>
+            Search the Veda
+          </button>
+          <button className={`${styles.ctaGhost} ${styles.btnHover}`} onClick={() => navigateToPage('explorer')}>
+            <span className={styles.btnIcon}>📖</span>
+            Browse Mandalas
+          </button>
         </div>
       </div>
     </section>

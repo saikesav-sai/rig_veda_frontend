@@ -12,7 +12,6 @@ export default function VedaExplorer() {
   const [loading, setLoading] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [availableMandalas, setAvailableMandalas] = useState([]);
-  const [loadingMandalas, setLoadingMandalas] = useState(true);
   
   // Search functionality for dropdowns
   const [hymnSearch, setHymnSearch] = useState("");
@@ -45,11 +44,9 @@ export default function VedaExplorer() {
 
   // Load available mandalas on component mount
   useEffect(() => {
-    setLoadingMandalas(true);
     // Try to get mandala list from a general endpoint or hardcode known range
     const mandalaRange = Array.from({length: 10}, (_, i) => i + 1);
     setAvailableMandalas(mandalaRange);
-    setLoadingMandalas(false);
   }, []);
 
   useEffect(() => {
@@ -369,41 +366,238 @@ export default function VedaExplorer() {
         </p>
       </div>
 
+      {/* Mandala, Hymn and Stanza Selectors */}
       <div style={{ display: "flex", gap: "1.5rem", marginBottom: "2rem", flexWrap: "wrap" }}>
-        {/* Mandala Selector - Keep as regular select since only 10 options */}
+        
+        {/* Mandala Dropdown */}
         <div style={{ flex: "1 1 250px" }}>
           <label style={{
             display: "block",
             marginBottom: "0.5rem",
             fontWeight: "600",
             color: "#374151",
-            fontSize: "0.9rem"
-          }}>📚 Mandala</label>
+            fontSize: "0.95rem"
+          }}>
+            📚 Mandala (Book)
+          </label>
           <select
             value={mandalaNum}
             onChange={(e) => handleMandalaChange(e.target.value)}
-            disabled={loadingMandalas}
             style={{
               width: "100%",
-              padding: "0.75rem",
-              fontSize: "1rem",
+              padding: "0.75rem 1rem",
               border: "2px solid #e5e7eb",
               borderRadius: "12px",
-              backgroundColor: "white",
+              fontSize: "1rem",
+              background: "white",
               cursor: "pointer",
               transition: "all 0.2s ease",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
+              outline: "none"
+            }}
+            onFocus={(e) => {
+              e.target.style.borderColor = "#667eea";
+              e.target.style.boxShadow = "0 0 0 3px rgba(102, 126, 234, 0.1)";
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = "#e5e7eb";
+              e.target.style.boxShadow = "none";
             }}
           >
             <option value="">Select Mandala...</option>
             {availableMandalas.map(num => (
-              <option key={num} value={num}>Mandala {num}</option>
+              <option key={num} value={num}>
+                Mandala {num}
+              </option>
             ))}
           </select>
-          {loadingMandalas && (
-            <small style={{ color: "#6b7280", fontStyle: "italic" }}>Loading mandalas...</small>
+          {mandalaNum && indexData && (
+            <p style={{
+              fontSize: "0.85rem",
+              color: "#6b7280",
+              marginTop: "0.5rem"
+            }}>
+              Contains {indexData.total_hymns} hymns
+            </p>
           )}
         </div>
+      
+      {/* Hide the book grid section */}
+      <div style={{ display: "none" }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+          gap: "1.5rem",
+          maxWidth: "1000px",
+          margin: "0 auto"
+        }}>
+          {availableMandalas.map(num => (
+            <div
+              key={num}
+              onClick={() => handleMandalaChange(num.toString())}
+              className="mandala-book"
+              style={{
+                position: "relative",
+                cursor: "pointer",
+                transform: mandalaNum === num.toString() ? "scale(1.05)" : "scale(1)",
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+              }}
+            >
+              {/* Book Cover */}
+              <div style={{
+                background: mandalaNum === num.toString() 
+                  ? "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)"
+                  : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                borderRadius: "12px",
+                padding: "2rem 1rem",
+                boxShadow: mandalaNum === num.toString()
+                  ? "0 20px 40px rgba(245, 158, 11, 0.4), 0 0 0 3px #fbbf24"
+                  : "0 8px 25px rgba(102, 126, 234, 0.3)",
+                position: "relative",
+                overflow: "hidden",
+                height: "180px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                border: mandalaNum === num.toString() ? "3px solid #fbbf24" : "none",
+                transformStyle: "preserve-3d",
+                perspective: "1000px"
+              }}
+              className="book-cover"
+            >
+              {/* Book Spine Effect */}
+              <div style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: "8px",
+                background: "linear-gradient(90deg, rgba(0,0,0,0.3) 0%, transparent 100%)",
+                borderRadius: "12px 0 0 12px"
+              }} />
+              
+              {/* Page Lines Effect */}
+              <div style={{
+                position: "absolute",
+                right: "8px",
+                top: "20px",
+                bottom: "20px",
+                width: "3px",
+                background: "rgba(255,255,255,0.3)",
+                borderRadius: "2px"
+              }} />
+              <div style={{
+                position: "absolute",
+                right: "14px",
+                top: "20px",
+                bottom: "20px",
+                width: "2px",
+                background: "rgba(255,255,255,0.2)",
+                borderRadius: "2px"
+              }} />
+              
+              {/* Om Symbol */}
+              <div style={{
+                fontSize: "2.5rem",
+                marginBottom: "0.5rem",
+                filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.3))"
+              }}>
+                �️
+              </div>
+              
+              {/* Mandala Number */}
+              <div style={{
+                color: "white",
+                fontSize: "2rem",
+                fontWeight: "800",
+                textShadow: "0 2px 10px rgba(0,0,0,0.3)",
+                letterSpacing: "1px"
+              }}>
+                {num}
+              </div>
+              
+              {/* Mandala Label */}
+              <div style={{
+                color: "rgba(255,255,255,0.95)",
+                fontSize: "0.85rem",
+                fontWeight: "600",
+                textTransform: "uppercase",
+                letterSpacing: "1.5px",
+                marginTop: "0.25rem"
+              }}>
+                Mandala
+              </div>
+              
+              {/* Hymn Count Badge */}
+              {indexData && mandalaNum === num.toString() && (
+                <div style={{
+                  position: "absolute",
+                  bottom: "10px",
+                  right: "10px",
+                  background: "rgba(255,255,255,0.25)",
+                  backdropFilter: "blur(10px)",
+                  borderRadius: "12px",
+                  padding: "0.25rem 0.6rem",
+                  fontSize: "0.75rem",
+                  fontWeight: "700",
+                  color: "white",
+                  border: "1px solid rgba(255,255,255,0.3)"
+                }}>
+                  {indexData.total_hymns} hymns
+                </div>
+              )}
+              
+              {/* Selected Checkmark */}
+              {mandalaNum === num.toString() && (
+                <div style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                  width: "28px",
+                  height: "28px",
+                  background: "white",
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "1rem",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.2)"
+                }}>
+                  ✓
+                </div>
+              )}
+              
+              {/* Decorative Corner */}
+              <div style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "40px",
+                height: "40px",
+                background: "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%)",
+                borderRadius: "12px 0 40px 0"
+              }} />
+            </div>
+            
+            {/* Book Info Below */}
+            <div style={{
+              textAlign: "center",
+              marginTop: "0.75rem",
+              fontSize: "0.85rem",
+              color: mandalaNum === num.toString() ? "#f59e0b" : "#6b7280",
+              fontWeight: mandalaNum === num.toString() ? "600" : "500"
+            }}>
+              {mandalaNum === num.toString() ? "✨ Selected" : "Click to select"}
+            </div>
+            </div>
+          ))}
+        </div>
+      </div> {/* End hidden book grid */}
+      </div> {/* End Mandala selector container */}
+
+      {mandalaNum && (
+        <div style={{ display: "flex", gap: "1.5rem", marginBottom: "2rem", flexWrap: "wrap" }}>
+
 
         {/* Hymn Searchable Dropdown */}
         <SearchableDropdown
@@ -444,7 +638,8 @@ export default function VedaExplorer() {
             return selectedHymn ? `✓ ${selectedHymn.total_stanzas} mantras available` : null;
           })()}
         />
-      </div>
+        </div>
+      )}
 
       <div style={{ textAlign: "center", marginBottom: "2rem" }}>
         <button
