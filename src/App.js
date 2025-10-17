@@ -140,7 +140,7 @@ function App() {
                 color: "rgba(255,255,255,0.9)",
                 marginBottom: "1.5rem"
               }}>
-                Search across all 10,552 verses using AI-powered semantic understanding
+                Discover Rig Veda slokas through keywords like “fire sacrifice” or “dawn goddess.
               </p>
               <div style={{
                 display: "inline-block",
@@ -207,7 +207,7 @@ function App() {
                 color: "rgba(255,255,255,0.9)",
                 marginBottom: "1.5rem"
               }}>
-                Ask questions and get contextual answers with verse references and insights
+                Explore the Rig Veda with AI Chat Bot, uncover verse meanings, historical context, and listen to authentic recitations.
               </p>
               <div style={{
                 display: "inline-block",
@@ -274,7 +274,7 @@ function App() {
                 color: "rgba(255,255,255,0.9)",
                 marginBottom: "1.5rem"
               }}>
-                Browse by Mandala, Sukta, and Mantra with audio recitations and translations
+                Navigate the Rig Veda systematically by Mandala, Hymn, and Stanza, complete with rich metadata and accompanying audio.
               </p>
               <div style={{
                 display: "inline-block",

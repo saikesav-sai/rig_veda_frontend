@@ -179,416 +179,553 @@ export default function SearchResults({ results, onBack }) {
   };
 
   return (
-    <div style={{ animation: "fadeIn 0.6s ease-out" }}>
-      {/* Add CSS animation for loading spinner */}
-      <style>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
-
-      {/* Header with back button */}
+    <div style={{ 
+      minHeight: "100vh", 
+      background: "linear-gradient(135deg, #fefce8 0%, #fff7ed 50%, #fef3c7 100%)", 
+      padding: "2rem 0",
+      position: "relative",
+      overflow: "hidden"
+    }}>
+      {/* Static Mandala Background */}
       <div style={{
-        display: "flex",
-        alignItems: "center",
-        marginBottom: "2rem",
-        gap: "1rem"
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "800px",
+        height: "800px",
+        opacity: "0.15",
+        pointerEvents: "none",
+        zIndex: 0
       }}>
-        <button
-          onClick={onBack}
-          style={{
-            background: "#667eea",
-            color: "white",
-            border: "none",
-            borderRadius: "12px",
-            padding: "0.75rem 1rem",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            fontWeight: "600",
-            transition: "all 0.2s ease"
-          }}
-        >
-          <FaArrowLeft /> Back to Search
-        </button>
-        <div>
-          <h2 style={{ 
-            margin: 0, 
-            color: config.color,
-            fontSize: "1.5rem",
-            fontWeight: "600"
-          }}>
-            {config.icon} {config.title}
-          </h2>
-        </div>
+        <svg viewBox="0 0 600 600" style={{
+          width: "100%",
+          height: "100%"
+        }}>
+          <defs>
+            <radialGradient id="mandala-gradient-results" cx="50%" cy="50%" r="60%">
+              <stop offset="0%" stopColor="#667eea" stopOpacity="0.3" />
+              <stop offset="50%" stopColor="#764ba2" stopOpacity="0.15" />
+              <stop offset="100%" stopColor="#f093fb" stopOpacity="0.05" />
+            </radialGradient>
+          </defs>
+          <circle cx="300" cy="300" r="140" fill="url(#mandala-gradient-results)" />
+          {[...Array(12)].map((_, i) => (
+            <ellipse 
+              key={i} 
+              cx="300" 
+              cy="120" 
+              rx="40" 
+              ry="14" 
+              fill="rgba(118,75,162,0.1)" 
+              transform={`rotate(${(i / 12) * 360} 300 300)`} 
+            />
+          ))}
+        </svg>
       </div>
 
-      {/* Global Audio Error Display */}
-      {audioError && (
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 2rem", position: "relative", zIndex: 1 }}>
+        {/* Add CSS animation for loading spinner */}
+        <style>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+
+        {/* Header with back button */}
         <div style={{
-          backgroundColor: "#fef2f2",
-          border: "1px solid #fecaca",
-          borderRadius: "12px",
-          padding: "1rem",
-          marginBottom: "2rem",
           display: "flex",
           alignItems: "center",
-          gap: "0.5rem",
-          color: "#dc2626"
+          marginBottom: "2rem",
+          gap: "1rem",
+          flexWrap: "wrap"
         }}>
-          <span style={{ fontSize: "1.2rem" }}>⚠️</span>
-          <span>{audioError}</span>
           <button
-            onClick={() => setAudioError(null)}
+            onClick={onBack}
             style={{
-              marginLeft: "auto",
-              background: "none",
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              color: "white",
               border: "none",
-              color: "#dc2626",
+              borderRadius: "50px",
+              padding: "1rem 2rem",
               cursor: "pointer",
-              fontSize: "1.2rem",
-              padding: "0.2rem"
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              fontWeight: "700",
+              fontSize: "1.05rem",
+              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              boxShadow: "0 10px 30px rgba(102,126,234,0.3)"
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = "translateY(-3px)";
+              e.target.style.boxShadow = "0 15px 40px rgba(102,126,234,0.4)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = "translateY(0)";
+              e.target.style.boxShadow = "0 10px 30px rgba(102,126,234,0.3)";
             }}
           >
-            ×
+            <FaArrowLeft /> Back to Search
           </button>
+          <div>
+            <h2 style={{ 
+              margin: 0, 
+              color: "#1e1b4b",
+              fontSize: "2rem",
+              fontWeight: "700"
+            }}>
+              {config.icon} {config.title}
+            </h2>
+          </div>
         </div>
-      )}
-      {/* AI Summary Section */}
-      {(answer || summary) && (
-        <div style={{
-          background: "white",
-          borderRadius: "16px",
-          padding: "2rem",
-          marginBottom: "2rem",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
-          border: `2px solid ${config.border}20`
-        }}>
-          <h3 style={{ 
-            color: config.color, 
-            marginBottom: "1.5rem",
-            fontSize: "1.3rem",
-            fontWeight: "600"
-          }}>
-            🤖 {answer ? 'AI Analysis' : 'Search Summary'}
-          </h3>
 
-          {(answer?.summary || summary) && (
-            <div style={{
-              background: config.bg,
-              border: `1px solid ${config.border}`,
-              borderRadius: "12px",
-              padding: "1.25rem",
-              marginBottom: "1rem"
-            }}>
-              <div style={{ 
-                fontWeight: "600", 
-                color: config.color,
-                marginBottom: "0.5rem",
-                fontSize: "1rem"
-              }}>
-                📝 Summary
-              </div>
-              <div style={{ lineHeight: "1.6", fontSize: "1.05rem", color: "#000000" }}>
-                {/* make color for text black */}
-                {answer?.summary || displaySummary}
-              </div>
-            </div>
-          )}
-
-          {answer?.interpretation && (
-            <div style={{
-              background: "#f0fdf4",
-              border: "1px solid #22c55e",
-              borderRadius: "12px",
-              padding: "1.25rem",
-              marginBottom: "1rem"
-            }}>
-              <div style={{ 
-                fontWeight: "600", 
-                color: "#16a34a",
-                marginBottom: "0.5rem",
-                fontSize: "1rem"
-              }}>
-                🎯 Interpretation
-              </div>
-              <div style={{ lineHeight: "1.6", fontSize: "1.05rem" }}>
-                {answer.interpretation}
-              </div>
-            </div>
-          )}
-
-          {answer?.reflection && (
-            <div style={{
-              background: "#fefce8",
-              border: "1px solid #eab308",
-              borderRadius: "12px",
-              padding: "1.25rem"
-            }}>
-              <div style={{ 
-                fontWeight: "600", 
-                color: "#ca8a04",
-                marginBottom: "0.5rem",
-                fontSize: "1rem"
-              }}>
-                🔮 Reflection
-              </div>
-              <div style={{ lineHeight: "1.6", fontSize: "1.05rem" }}>
-                {answer.reflection}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Verses Display Section */}
-      {displayVerses && displayVerses.length > 0 && (
-        <div style={{ marginBottom: "2rem" }}>
+        {/* Global Audio Error Display */}
+        {audioError && (
           <div style={{
+            background: "linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.05))",
+            border: "2px solid rgba(239,68,68,0.3)",
+            borderRadius: "16px",
+            padding: "1.25rem 1.5rem",
+            marginBottom: "2rem",
             display: "flex",
-            justifyContent: "space-between",
             alignItems: "center",
-            marginBottom: "1.5rem",
-            flexWrap: "wrap",
-            gap: "1rem"
+            gap: "0.75rem",
+            color: "#dc2626",
+            fontWeight: "600",
+            boxShadow: "0 4px 12px rgba(239,68,68,0.15)"
+          }}>
+            <span style={{ fontSize: "1.5rem" }}>⚠️</span>
+            <span style={{ flex: 1 }}>{audioError}</span>
+            <button
+              onClick={() => setAudioError(null)}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#dc2626",
+                cursor: "pointer",
+                fontSize: "1.5rem",
+                padding: "0.2rem",
+                fontWeight: "bold",
+                transition: "transform 0.2s"
+              }}
+              onMouseEnter={(e) => e.target.style.transform = "scale(1.2)"}
+              onMouseLeave={(e) => e.target.style.transform = "scale(1)"}
+            >
+              ×
+            </button>
+          </div>
+        )}
+
+        {/* AI Summary Section */}
+        {(answer || summary) && (
+          <div style={{
+            background: "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(254,252,232,0.95))",
+            borderRadius: "24px",
+            padding: "2.5rem",
+            marginBottom: "3rem",
+            boxShadow: "0 15px 50px rgba(102,126,234,0.15)",
+            border: `2px solid ${config.border}40`,
+            backdropFilter: "blur(10px)"
           }}>
             <h3 style={{ 
-              color: "#374151", 
-              margin: 0,
-              fontSize: "1.3rem",
-              fontWeight: "600"
+              color: config.color, 
+              marginBottom: "1.5rem",
+              fontSize: "1.8rem",
+              fontWeight: "700",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem"
             }}>
-              📚 Found Verses ({displayVerses.length})
+              🤖 {answer ? 'AI Analysis' : 'Search Summary'}
             </h3>
-            
-            {/* Relevance Legend */}
-            {intentUsed === 'semantic_search' && (
+
+            {(answer?.summary || summary) && (
               <div style={{
-                display: "flex",
-                gap: "0.75rem",
-                flexWrap: "wrap",
-                alignItems: "center"
+                background: "linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.05))",
+                border: `2px solid ${config.border}60`,
+                borderRadius: "16px",
+                padding: "1.75rem",
+                marginBottom: answer?.interpretation || answer?.reflection ? "1.5rem" : "0"
               }}>
-                
-                  
+                <div style={{ 
+                  fontWeight: "700", 
+                  color: config.color,
+                  marginBottom: "0.75rem",
+                  fontSize: "1.1rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem"
+                }}>
+                  📝 Summary
+                </div>
+                <div style={{ lineHeight: "1.8", fontSize: "1.1rem", color: "#1e1b4b" }}>
+                  {answer?.summary || displaySummary}
+                </div>
+              </div>
+            )}
+
+            {answer?.interpretation && (
+              <div style={{
+                background: "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,150,105,0.05))",
+                border: "2px solid rgba(16,185,129,0.3)",
+                borderRadius: "16px",
+                padding: "1.75rem",
+                marginBottom: answer?.reflection ? "1.5rem" : "0"
+              }}>
+                <div style={{ 
+                  fontWeight: "700", 
+                  color: "#16a34a",
+                  marginBottom: "0.75rem",
+                  fontSize: "1.1rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem"
+                }}>
+                  🎯 Interpretation
+                </div>
+                <div style={{ lineHeight: "1.8", fontSize: "1.1rem", color: "#1e1b4b" }}>
+                  {answer.interpretation}
+                </div>
+              </div>
+            )}
+
+            {answer?.reflection && (
+              <div style={{
+                background: "linear-gradient(135deg, rgba(245,158,11,0.08), rgba(217,119,6,0.05))",
+                border: "2px solid rgba(245,158,11,0.3)",
+                borderRadius: "16px",
+                padding: "1.75rem"
+              }}>
+                <div style={{ 
+                  fontWeight: "700", 
+                  color: "#ca8a04",
+                  marginBottom: "0.75rem",
+                  fontSize: "1.1rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem"
+                }}>
+                  🔮 Reflection
+                </div>
+                <div style={{ lineHeight: "1.8", fontSize: "1.1rem", color: "#1e1b4b" }}>
+                  {answer.reflection}
+                </div>
               </div>
             )}
           </div>
-          
-          <div style={{
-            display: "grid",
-            gap: "1.5rem"
-          }}>
-            {displayVerses.map((verse, index) => (
-              <div
-                key={verse.location || index}
-                style={{
-                  background: "white",
-                  borderRadius: "16px",
-                  padding: "2rem",
-                  boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-                  border: "1px solid #e5e7eb",
-                  position: "relative"
-                }}
-              >
-                {/* Verse Header */}
-                <div style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "1.5rem",
-                  flexWrap: "wrap",
-                  gap: "1rem"
-                }}>
+        )}
+
+        {/* Verses Display Section */}
+        {displayVerses && displayVerses.length > 0 && (
+          <div style={{ marginBottom: "2rem" }}>
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "2rem",
+              flexWrap: "wrap",
+              gap: "1rem"
+            }}>
+              <h3 style={{ 
+                color: "#1e1b4b", 
+                margin: 0,
+                fontSize: "1.8rem",
+                fontWeight: "700"
+              }}>
+                📚 Found {displayVerses.length} {displayVerses.length === 1 ? 'Verse' : 'Verses'}
+              </h3>
+            </div>
+            
+            <div style={{
+              display: "grid",
+              gap: "2rem"
+            }}>
+              {displayVerses.map((verse, index) => (
+                <div
+                  key={verse.location || index}
+                  style={{
+                    background: "white",
+                    borderRadius: "24px",
+                    padding: "2.5rem",
+                    boxShadow: "0 15px 50px rgba(0,0,0,0.1)",
+                    border: "2px solid rgba(102,126,234,0.1)",
+                    position: "relative",
+                    transition: "all 0.3s ease"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = "0 20px 60px rgba(102,126,234,0.2)";
+                    e.currentTarget.style.transform = "translateY(-5px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = "0 15px 50px rgba(0,0,0,0.1)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
+                  {/* Verse Header */}
                   <div style={{
                     display: "flex",
+                    justifyContent: "space-between",
                     alignItems: "center",
+                    marginBottom: "2rem",
+                    flexWrap: "wrap",
                     gap: "1rem"
                   }}>
                     <h4 style={{
                       margin: 0,
-                      color: "#1e293b",
-                      fontSize: "1.1rem",
-                      fontWeight: "600"
+                      fontSize: "1.5rem",
+                      fontWeight: "800",
+                      background: "linear-gradient(135deg, #1e1b4b 0%, #6b21a8 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.5rem"
                     }}>
                       📍 {verse.location}
+                      {verse.confidence && verse.confidence >= 0.6 && (
+                        <span style={{
+                          background: verse.confidence >= 0.8 
+                            ? "linear-gradient(135deg, #10b981 0%, #059669 100%)" 
+                            : verse.confidence >= 0.7 
+                            ? "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)" 
+                            : "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
+                          color: "white",
+                          padding: "0.4rem 1rem",
+                          borderRadius: "50px",
+                          fontSize: "0.75rem",
+                          fontWeight: "700",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "0.4rem",
+                          boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
+                        }}>
+                          {verse.confidence >= 0.8 ? "🎯 Highly Relevant" : 
+                           verse.confidence >= 0.7 ? "⭐ Very Relevant" : "✨ Relevant"}
+                        </span>
+                      )}
                     </h4>
-                    {verse.confidence && verse.confidence >= 0.6 && (
-                      <span style={{
-                        backgroundColor: verse.confidence >= 0.8 ? "#10b981" : 
-                                       verse.confidence >= 0.7 ? "#f59e0b" : "#3b82f6",
-                        color: "white",
-                        padding: "0.3rem 0.8rem",
-                        borderRadius: "12px",
-                        fontSize: "0.8rem",
-                        fontWeight: "600",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.3rem"
-                      }}>
-                        {verse.confidence >= 0.8 ? "🎯 Highly Relevant" : 
-                         verse.confidence >= 0.7 ? "⭐ Very Relevant" : "✨ Relevant"}
-                      </span>
-                    )}
-                  </div>
-                  <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
                     <button
                       onClick={() => toggleAudio(verse)}
+                      disabled={audioLoading === verse.location}
                       style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.75rem",
                         background: playingAudio === verse.location 
                           ? "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)" 
                           : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                         color: "white",
                         border: "none",
-                        borderRadius: "8px",
-                        padding: "0.5rem 1rem",
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.5rem",
-                        fontSize: "0.9rem",
-                        fontWeight: "600",
-                        transition: "all 0.2s ease",
-                        minWidth: "80px",
-                        justifyContent: "center"
+                        padding: "1rem 1.75rem",
+                        borderRadius: "50px",
+                        fontWeight: "700",
+                        cursor: audioLoading === verse.location ? "not-allowed" : "pointer",
+                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                        fontSize: "1rem",
+                        minWidth: "120px",
+                        justifyContent: "center",
+                        boxShadow: playingAudio === verse.location
+                          ? "0 10px 30px rgba(239,68,68,0.3)"
+                          : "0 10px 30px rgba(102,126,234,0.3)"
                       }}
-                      disabled={audioLoading === verse.location}
+                      onMouseEnter={(e) => {
+                        if (audioLoading !== verse.location) {
+                          e.target.style.transform = "translateY(-3px)";
+                          e.target.style.boxShadow = playingAudio === verse.location
+                            ? "0 15px 40px rgba(239,68,68,0.4)"
+                            : "0 15px 40px rgba(102,126,234,0.4)";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.transform = "translateY(0)";
+                        e.target.style.boxShadow = playingAudio === verse.location
+                          ? "0 10px 30px rgba(239,68,68,0.3)"
+                          : "0 10px 30px rgba(102,126,234,0.3)";
+                      }}
                     >
                       {getAudioButtonContent(verse)}
                     </button>
-                    {audioError === `Failed to load audio for ${verse.location}` && (
-                      <span style={{
-                        fontSize: "0.8rem",
-                        color: "#ef4444",
-                        fontStyle: "italic"
+                  </div>
+
+                  {/* Sanskrit Text */}
+                  {verse.sanskrit && (
+                    <div style={{
+                      background: "linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08))",
+                      border: "3px solid rgba(102,126,234,0.2)",
+                      borderRadius: "20px",
+                      padding: "2rem",
+                      marginBottom: "2rem"
+                    }}>
+                      <div style={{ 
+                        textAlign: "center", 
+                        marginBottom: "1rem", 
+                        color: "#667eea", 
+                        fontWeight: "700",
+                        fontSize: "0.9rem",
+                        letterSpacing: "1px"
                       }}>
-                        Audio unavailable
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Sanskrit Text */}
-                {verse.sanskrit && (
-                  <div style={{
-                    backgroundColor: "rgba(102, 126, 234, 0.08)",
-                    border: "1px solid rgba(102, 126, 234, 0.2)",
-                    borderRadius: "12px",
-                    padding: "1.5rem",
-                    marginBottom: "1.5rem"
-                  }}>
-                    <div style={{
-                      fontSize: "1.2rem",
-                      fontWeight: "600",
-                      color: "#1e293b",
-                      lineHeight: "1.6",
-                      fontFamily: "'Noto Serif Devanagari', serif"
-                    }}>
-                      {verse.sanskrit}
-                    </div>
-                  </div>
-                )}
-
-                {/* Transliteration */}
-                {verse.transliteration && (
-                  <div style={{
-                    backgroundColor: "#f8fafc",
-                    borderRadius: "8px",
-                    padding: "1rem",
-                    marginBottom: "1.5rem",
-                    fontStyle: "italic",
-                    color: "#64748b"
-                  }}>
-                    {verse.transliteration}
-                  </div>
-                )}
-
-                {/* Translation */}
-                {verse.translation && (
-                  <div style={{
-                    backgroundColor: "rgba(16, 185, 129, 0.05)",
-                    border: "1px solid rgba(16, 185, 129, 0.2)",
-                    borderRadius: "12px",
-                    padding: "1.5rem",
-                    marginBottom: "1rem"
-                  }}>
-                    <div style={{
-                      fontSize: "1.05rem",
-                      color: "#1e293b",
-                      lineHeight: "1.6"
-                    }}>
-                      {verse.translation}
-                    </div>
-                  </div>
-                )}
-
-                {/* Additional Translations */}
-                {verse.translations && Object.keys(verse.translations).filter(key => key.toLowerCase() !== 'griffith').length > 0 && (
-                  <div style={{
-                    borderTop: "1px solid #e5e7eb",
-                    paddingTop: "1rem"
-                  }}>
-                    <div style={{
-                      fontSize: "0.9rem",
-                      fontWeight: "600",
-                      color: "#6b7280",
-                      marginBottom: "0.8rem"
-                    }}>
-                      Alternative Translations:
-                    </div>
-                    {Object.entries(verse.translations)
-                      .filter(([key]) => key.toLowerCase() !== 'griffith')
-                      .map(([translator, translation]) => (
-                      <div
-                        key={translator}
-                        style={{
-                          backgroundColor: "#f9fafb",
-                          borderRadius: "8px",
-                          padding: "1rem",
-                          marginBottom: "0.8rem",
-                          fontSize: "0.95rem"
-                        }}
-                      >
-                        <div style={{
-                          fontWeight: "600",
-                          color: "#374151",
-                          marginBottom: "0.4rem",
-                          textTransform: "capitalize"
-                        }}>
-                          {translator}:
-                        </div>
-                        <div style={{ color: "#6b7280", fontStyle: "italic" }}>
-                          "{translation}"
-                        </div>
+                        🕉️ SANSKRIT TEXT 🕉️
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+                      <p style={{
+                        fontSize: "1.5rem",
+                        textAlign: "center",
+                        color: "#1e1b4b",
+                        lineHeight: "2",
+                        fontFamily: "'Noto Serif Devanagari', serif",
+                        fontWeight: "600",
+                        margin: 0
+                      }}>
+                        {verse.sanskrit}
+                      </p>
+                    </div>
+                  )}
 
-      {/* No results message */}
-      {(!displayVerses || displayVerses.length === 0) && !answer && !summary && (
-        <div style={{ 
-          textAlign: "center", 
-          color: "#6b7280",
-          background: "white",
-          padding: "3rem",
-          borderRadius: "16px",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.08)"
-        }}>
-          <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔍</div>
-          <div style={{ fontSize: "1.2rem", fontWeight: "600", marginBottom: "0.5rem" }}>
-            No results found
+                  {/* Transliteration */}
+                  {verse.transliteration && (
+                    <div style={{
+                      background: "#f8fafc",
+                      borderRadius: "12px",
+                      padding: "1.5rem",
+                      marginBottom: "2rem"
+                    }}>
+                      <span style={{ 
+                        color: "#667eea", 
+                        fontSize: "0.9rem", 
+                        fontWeight: "700",
+                        letterSpacing: "0.5px"
+                      }}>
+                        Transliteration
+                      </span>
+                      <p style={{ 
+                        fontSize: "1.1rem", 
+                        color: "#475569", 
+                        fontStyle: "italic", 
+                        marginTop: "0.8rem",
+                        lineHeight: "1.6",
+                        margin: "0.8rem 0 0 0"
+                      }}>
+                        {verse.transliteration}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Translation */}
+                  {verse.translation && (
+                    <div style={{
+                      background: "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,150,105,0.08))",
+                      border: "3px solid rgba(16,185,129,0.25)",
+                      borderRadius: "20px",
+                      padding: "2rem"
+                    }}>
+                      <span style={{ 
+                        color: "#10b981", 
+                        fontSize: "1rem", 
+                        fontWeight: "700",
+                        letterSpacing: "0.5px"
+                      }}>
+                        ENGLISH TRANSLATION
+                      </span>
+                      <p style={{ 
+                        fontSize: "1.2rem", 
+                        color: "#1e1b4b", 
+                        lineHeight: "1.8", 
+                        fontStyle: "italic", 
+                        marginTop: "1rem",
+                        margin: "1rem 0 0 0"
+                      }}>
+                        "{verse.translation}"
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Additional Translations */}
+                  {verse.translations && Object.keys(verse.translations).filter(key => key.toLowerCase() !== 'griffith').length > 0 && (
+                    <div style={{
+                      borderTop: "2px solid #f1f5f9",
+                      paddingTop: "2rem",
+                      marginTop: "2rem"
+                    }}>
+                      <div style={{
+                        fontSize: "1rem",
+                        fontWeight: "700",
+                        color: "#64748b",
+                        marginBottom: "1rem",
+                        letterSpacing: "0.5px"
+                      }}>
+                        📖 Alternative Translations
+                      </div>
+                      {Object.entries(verse.translations)
+                        .filter(([key]) => key.toLowerCase() !== 'griffith')
+                        .map(([translator, translation]) => (
+                        <div
+                          key={translator}
+                          style={{
+                            background: "linear-gradient(135deg, rgba(248,250,252,1), rgba(241,245,249,1))",
+                            borderRadius: "12px",
+                            padding: "1.5rem",
+                            marginBottom: "1rem",
+                            border: "1px solid #e2e8f0"
+                          }}
+                        >
+                          <div style={{
+                            fontWeight: "700",
+                            color: "#1e293b",
+                            marginBottom: "0.75rem",
+                            textTransform: "capitalize",
+                            fontSize: "0.95rem"
+                          }}>
+                            {translator}:
+                          </div>
+                          <div style={{ 
+                            color: "#475569", 
+                            fontStyle: "italic", 
+                            lineHeight: "1.6",
+                            fontSize: "1.05rem"
+                          }}>
+                            "{translation}"
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-          <div>Try different keywords or explore our suggested themes!</div>
-        </div>
-      )}
+        )}
+
+        {/* No results message */}
+        {(!displayVerses || displayVerses.length === 0) && !answer && !summary && (
+          <div style={{ 
+            textAlign: "center", 
+            background: "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(254,252,232,0.95))",
+            padding: "4rem 2rem",
+            borderRadius: "24px",
+            boxShadow: "0 15px 50px rgba(0,0,0,0.1)",
+            border: "2px solid rgba(102,126,234,0.1)",
+            backdropFilter: "blur(10px)"
+          }}>
+            <div style={{ fontSize: "4rem", marginBottom: "1.5rem" }}>🔍</div>
+            <div style={{ 
+              fontSize: "1.5rem", 
+              fontWeight: "700", 
+              marginBottom: "0.75rem",
+              color: "#1e1b4b"
+            }}>
+              No results found
+            </div>
+            <div style={{ 
+              fontSize: "1.1rem", 
+              color: "#475569",
+              lineHeight: "1.6"
+            }}>
+              Try different keywords or explore our suggested themes!
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
