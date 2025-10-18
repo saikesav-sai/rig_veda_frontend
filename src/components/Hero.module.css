@@ -287,8 +287,10 @@
 .vedaIcon {
   display: inline-block;
   margin-right: 0.5rem;
-  font-size: 1.2em;
-  animation: book-flip 6s ease-in-out infinite;
+  width: 5rem;
+  height: 5rem;
+  vertical-align: middle;
+  object-fit: contain;
 }
 
 @keyframes book-flip {
@@ -328,5 +330,5 @@
 }
 
 .btnHover:hover .btnIcon {
-  transform: scale(1.2) translateX(5px);
+  transform: scale(1.2) rotate(10deg);
 }

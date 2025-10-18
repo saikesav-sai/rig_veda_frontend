@@ -20,13 +20,13 @@ const SACRED_GRADIENTS = {
 const getIntentConfig = (intent) => {
   const configs = {
     semantic_search: { color: VEDIC_COLORS.cosmicBlue, bg: VEDIC_COLORS.divineGlow,
-      icon: '🔍', symbol: '🌌', title: 'Cosmic Search' },
+      icon: <img src="/search2.png" alt="Search" style={{ width: "1.2rem", height: "1.2rem", display: "inline-block", verticalAlign: "middle" }} />, symbol: '🌌', title: 'Cosmic Search' },
     verse_lookup: { color: VEDIC_COLORS.sacredOrange, bg: VEDIC_COLORS.earthyBeige,
-      icon: '📿', symbol: '🪷', title: 'Sacred Verse' },
+      icon: <img src="/mantra.png" alt="Mantra" style={{ width: "1.2rem", height: "1.2rem", display: "inline-block", verticalAlign: "middle" }} />, symbol: '🪷', title: 'Sacred Verse' },
     explanation: { color: VEDIC_COLORS.etherealPurple, bg: '#f3e8ff',
-      icon: '💫', symbol: '🕉️', title: 'Divine Wisdom' },
+      icon: '💫', symbol: <img src="/om.png" alt="Om" style={{ width: "1.2rem", height: "1.2rem", display: "inline-block", verticalAlign: "middle" }} />, title: 'Divine Wisdom' },
     general: { color: VEDIC_COLORS.mutedViolet, bg: VEDIC_COLORS.ivoryWhite,
-      icon: '🙏', symbol: '✨', title: 'Sacred Dialogue' }
+      icon: <img src="/namaste.png" alt="Namaste" style={{ width: "1.2rem", height: "1.2rem", display: "inline-block", verticalAlign: "middle" }} />, symbol: '✨', title: 'Sacred Dialogue' }
   };
   return configs[intent] || configs.general;
 };
@@ -41,7 +41,7 @@ const SlokaCard = ({ sloka, idx, playingAudio, audioLoading, toggleAudio }) => (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
       marginBottom: "0.5rem", gap: "0.5rem" }}>
       <div style={{ fontWeight: "600", color: VEDIC_COLORS.cosmicBlue,
-        fontSize: "0.9rem" }}>🕉️ {sloka.location}</div>
+        fontSize: "0.9rem" }}><img src="/om.png" alt="Om" style={{ width: "1rem", height: "1rem", display: "inline-block", verticalAlign: "middle", marginRight: "0.3rem" }} /> {sloka.location}</div>
       <button onClick={() => toggleAudio(sloka.location)}
         disabled={audioLoading === sloka.location}
         style={{ display: "flex", alignItems: "center", gap: "0.4rem",
@@ -88,7 +88,7 @@ const Section = ({ title, content, gradient, borderColor }) => (
       background: SACRED_GRADIENTS.divine }} />
     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem",
       marginBottom: "0.75rem" }}>
-      <span style={{ fontSize: "1.2rem" }}>{title.icon}</span>
+      <span style={{ fontSize: "1.2rem" }}>{typeof title.icon === 'string' ? title.icon : title.icon}</span>
       <strong style={{ color: title.color, fontFamily: "'Crimson Pro', serif",
         fontSize: "1.1rem" }}>{title.text}</strong>
     </div>
@@ -189,21 +189,21 @@ export default function ChatBot() {
         )}
 
         {answer?.summary && (
-          <Section title={{ icon: "📜", text: "Sacred Summary", color: VEDIC_COLORS.cosmicBlue }}
+          <Section title={{ icon: <img src="/book.png" alt="Book" style={{ width: "1.5rem", height: "1.5rem", display: "inline-block", verticalAlign: "middle" }} />, text: "Sacred Summary", color: VEDIC_COLORS.cosmicBlue }}
             content={answer.summary} gradient={SACRED_GRADIENTS.pure}
             borderColor={`${VEDIC_COLORS.softGold}40`} />
         )}
 
         {answer?.interpretation && (
           <Section
-            title={{ icon: "🔮", text: "Divine Interpretation", color: VEDIC_COLORS.mutedViolet }}
+            title={{ icon: '🔮', text: "Divine Interpretation", color: VEDIC_COLORS.mutedViolet }}
             content={answer.interpretation}
             gradient="linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%)"
             borderColor={`${VEDIC_COLORS.mutedViolet}40`} />
         )}
 
         {answer?.reflection && (
-          <Section title={{ icon: "🌟", text: "Cosmic Reflection", color: VEDIC_COLORS.sacredOrange }}
+          <Section title={{ icon: '🌟', text: "Cosmic Reflection", color: VEDIC_COLORS.sacredOrange }}
             content={<div style={{ fontStyle: "italic" }}>{answer.reflection}</div>}
             gradient="linear-gradient(135deg, #fefce8 0%, #fef3c7 100%)"
             borderColor={`${VEDIC_COLORS.sacredOrange}40`} />
@@ -374,8 +374,8 @@ export default function ChatBot() {
                 background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                 opacity: chatInput.trim() ? 1 : 0, transition: "opacity 0.3s ease" }} />
               <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                <span style={{ fontSize: "1.3rem",
-                  filter: "drop-shadow(0 0 8px rgba(245, 158, 11, 0.3))" }}>🙏</span>
+                <img src="/namaste.png" alt="Namaste" style={{ fontSize: "1.3rem", width: "1.5rem", height: "1.5rem",
+                  filter: "drop-shadow(0 0 8px rgba(245, 158, 11, 0.3))" }} />
                 <input type="text" value={chatInput} onChange={(e) => setChatInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleChatSend()}
                   placeholder="Ask about hymns, themes, or cosmic concepts..."

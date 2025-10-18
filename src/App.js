@@ -69,12 +69,14 @@ function App() {
   const currentPage = location.pathname === '/' ? 'home' : location.pathname.replace(/^\//, '');
 
   const features = [
-    { gradient: GRADIENTS.purple, title: "Semantic Search", icon: "🔍", page: "search",
-      description: "Discover Rig Veda slokas through keywords like \"fire sacrifice\" or \"dawn goddess.\"" },
-    { gradient: GRADIENTS.orange, title: "Sacred AI Guide", icon: "🪷", page: "chat",
+    { gradient: GRADIENTS.green, title: "Veda Explorer", icon: <img src="/mandala.png" alt="Explorer" style={{ width: "4rem", height: "4rem", filter: "brightness(0) invert(1)" }} />, page: "explorer",
+      description: "Navigate the Rig Veda systematically by Mandala, Hymn, and Verse, complete with rich metadata and accompanying audio." },
+      { gradient: GRADIENTS.orange, title: "Sacred AI Guide", icon: "🪷", page: "chat",
       description: "Explore the Rig Veda with AI Chat Bot, uncover verse meanings, historical context, and listen to authentic recitations." },
-    { gradient: GRADIENTS.green, title: "Veda Explorer", icon: "📖", page: "explorer",
-      description: "Navigate the Rig Veda systematically by Mandala, Hymn, and Stanza, complete with rich metadata and accompanying audio." }
+    { gradient: GRADIENTS.purple, title: "Semantic Search", icon: <img src="/search2.png" alt="Search" style={{ width: "4rem", height: "4rem", filter: "brightness(0) invert(1)" }} />, page: "search",
+      description: "Discover Rig Veda slokas through keywords like \"fire sacrifice\" or \"dawn goddess.\"" }
+    
+    
   ];
 
   const stats = [
@@ -136,7 +138,7 @@ function App() {
             background: "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.05\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')",
             opacity: 0.3 }} />
           <div style={{ position: "relative", zIndex: 2 }}>
-            <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🕉️</div>
+            <img src="/om.png" alt="Om" style={{ width: "4rem", height: "4rem", marginBottom: "1rem" }} />
             <h2 style={{ fontSize: "2.5rem", fontWeight: "700", marginBottom: "1rem" }}>
               Begin Your Journey
             </h2>
@@ -179,17 +181,18 @@ function App() {
             <div onClick={goHome}
               style={{ display: "flex", alignItems: "center", gap: "1rem", cursor: "pointer",
                 transition: "all 0.3s ease" }}>
-              <span style={{ fontSize: "2rem" }}>🕉️</span>
-              <h1 style={{ fontSize: "1.5rem", margin: 0, fontWeight: "700",
-                letterSpacing: "-0.5px" }}>Rig Veda Explorer</h1>
+              <img src="/om.png" alt="Om" style={{ width: "2.5rem", height: "2.5rem", objectFit: "contain" }} />
+              <h1 style={{ fontSize: "1.5rem", margin: 0, fontWeight: "700",letterSpacing: "-0.5px" }}>Eternal Veda </h1>
             </div>
             <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-              <NavButton page="search" currentPage={currentPage} onClick={navigateToPage}
-                icon="🔍" label="Search" />
-              <NavButton page="chat" currentPage={currentPage} onClick={navigateToPage}
-                icon="AI Guide" label="" />
               <NavButton page="explorer" currentPage={currentPage} onClick={navigateToPage}
-                icon="Explorer" label="" />
+                icon={<img src="/book.png" alt="Explorer" style={{ width: "1.2rem", height: "1.2rem", verticalAlign: "middle", marginRight: "0.3rem" }} />} label="Explorer" />
+                <NavButton page="chat" currentPage={currentPage} onClick={navigateToPage}
+                icon={<img src="/AI.png" alt="AI Guide" style={{ width: "1.2rem", height: "1.2rem", verticalAlign: "middle", marginRight: "0.3rem" }} />} label="AI Guide" />
+              <NavButton page="search" currentPage={currentPage} onClick={navigateToPage}
+                icon={<img src="/search3.png" alt="Search" style={{ width: "1.2rem", height: "1.2rem", verticalAlign: "middle", marginRight: "0.3rem" }} />} label="Search" />
+              
+              
             </div>
           </div>
         </div>

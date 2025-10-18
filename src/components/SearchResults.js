@@ -85,18 +85,18 @@ const VerseCard = ({ verse, index, playingAudio, audioLoading, toggleAudio }) =>
         WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
         display: "flex", alignItems: "center", gap: "0.5rem" }}>
         📍 {verse.location}
-        {verse.confidence && verse.confidence >= 0.6 && (
+        {verse.confidence && verse.confidence >= 0.15 && (
           <span style={{
-            background: verse.confidence >= 0.8 
+            background: verse.confidence >= 0.35 
               ? "linear-gradient(135deg, #10b981 0%, #059669 100%)" 
-              : verse.confidence >= 0.7 
+              : verse.confidence >= 0.25 
               ? "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)" 
               : "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
             color: "white", padding: "0.4rem 1rem", borderRadius: "50px",
             fontSize: "0.75rem", fontWeight: "700", display: "inline-flex",
             alignItems: "center", gap: "0.4rem", boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }}>
-            {verse.confidence >= 0.8 ? "🎯 Highly Relevant" : 
-             verse.confidence >= 0.7 ? "⭐ Very Relevant" : "✨ Relevant"}
+            {verse.confidence >= 0.35 ? "🎯 Highly Relevant" : 
+             verse.confidence >= 0.25 ? "⭐ Very Relevant" : "✨ Relevant"}
           </span>
         )}
       </h4>

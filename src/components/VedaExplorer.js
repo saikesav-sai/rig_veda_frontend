@@ -69,7 +69,9 @@ const VerseCard = ({ sloka, playing, toggleAudio }) => (
       marginBottom: "2rem", flexWrap: "wrap", gap: "1rem" }}>
       <h3 style={{ fontSize: "1.8rem", fontWeight: "800", margin: 0,
         background: "linear-gradient(135deg, #1e1b4b 0%, #6b21a8 100%)",
-        WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>📍 {sloka.location}</h3>
+        WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+        <img src="/mantra.png" alt="Location" style={{ width: "1.5rem", height: "1.5rem", display: "inline-block", verticalAlign: "middle", marginRight: "0.5rem" }} /> {sloka.location}
+      </h3>
       <button onClick={toggleAudio} style={{ display: "flex", alignItems: "center", gap: "0.75rem",
         background: playing ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" 
           : "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
@@ -81,7 +83,7 @@ const VerseCard = ({ sloka, playing, toggleAudio }) => (
     <div style={{ background: "linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08))",
       border: "3px solid rgba(102,126,234,0.2)", borderRadius: "24px", padding: "2rem", marginBottom: "2rem" }}>
       <div style={{ textAlign: "center", marginBottom: "1rem", color: "#667eea", fontWeight: "700" }}>
-        🕉️ SANSKRIT TEXT 🕉️
+        <img src="/om.png" alt="Om" style={{ width: "1.5rem", height: "1.5rem", display: "inline-block", verticalAlign: "middle", marginRight: "0.3rem" }} /> SANSKRIT TEXT <img src="/om.png" alt="Om" style={{ width: "1.5rem", height: "1.5rem", display: "inline-block", verticalAlign: "middle", marginLeft: "0.3rem" }} />
       </div>
       <p style={{ fontSize: "1.6rem", textAlign: "center", color: "#1e1b4b", lineHeight: "2",
         fontFamily: "'Noto Serif Devanagari', serif" }}>{sloka.sanskrit}</p>
@@ -93,12 +95,13 @@ const VerseCard = ({ sloka, playing, toggleAudio }) => (
       </p>
     </div>
     <div style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,150,105,0.08))",
-      border: "3px solid rgba(16,185,129,0.25)", borderRadius: "24px", padding: "2rem" }}>
-      <span style={{ color: "#10b981", fontSize: "1rem", fontWeight: "700" }}>ENGLISH TRANSLATION</span>
-      <p style={{ fontSize: "1.2rem", color: "#1e1b4b", lineHeight: "1.8", fontStyle: "italic",
-        marginTop: "1rem" }}>"{sloka.translation}"</p>
+        border: "3px solid rgba(16,185,129,0.25)", borderRadius: "24px", padding: "2rem" }}>
+        <span style={{ color: "#10b981", fontSize: "1rem", fontWeight: "700" }}>ENGLISH TRANSLATION</span>
+        <p style={{ fontSize: "1.2rem", color: "#1e1b4b", lineHeight: "1.8", fontStyle: "italic",
+          marginTop: "1rem" }}>"{sloka.translation}"</p>
+      </div>
     </div>
-  </div>
+  
 );
 
 // Step indicator
@@ -255,9 +258,9 @@ export default function VedaExplorer() {
   };
 
   const steps = [
-    { num: 1, label: "Mandala", icon: "📚" },
-    { num: 2, label: "Sukta", icon: "🎵" },
-    { num: 3, label: "Mantra", icon: "📝" }
+    { num: 1, label: "Mandala", icon: <img src="/book.png" alt="Book" style={{ width: "1.2rem", height: "1.2rem" }} /> },
+    { num: 2, label: "Sukta", icon: <img src="/sukta.png" alt="Sukta" style={{ width: "1.2rem", height: "1.2rem" }} /> },
+    { num: 3, label: "Mantra", icon: <img src="/mantra.png" alt="Mantra" style={{ width: "1.2rem", height: "1.2rem" }} /> }
   ];
 
   return (
@@ -271,6 +274,7 @@ export default function VedaExplorer() {
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
           <h2 style={{ fontSize: "3.5rem", fontWeight: "700", color: "#1e1b4b",
             marginBottom: "1rem", letterSpacing: "-1px", lineHeight: "1.2" }}>
+            <img src="/book.png" alt="Book" style={{ width: "3rem", height: "3rem", display: "inline-block", verticalAlign: "middle", marginRight: "0.5rem" }} />
             Rig Veda Explorer
           </h2>
           <p style={{ color: "#475569", fontSize: "1.2rem", lineHeight: "1.6", fontWeight: "400" }}>
@@ -303,7 +307,9 @@ export default function VedaExplorer() {
             <div style={STYLES.card}>
               <div style={{ marginBottom: "2rem" }}>
                 <label style={{ display: "block", marginBottom: "1rem", fontWeight: "700",
-                  color: "#1e1b4b", fontSize: "1.1rem" }}>📚 Step 1: Choose Mandala (Book)</label>
+                  color: "#1e1b4b", fontSize: "1.1rem" }}>
+                  <img src="/book.png" alt="Book" style={{ width: "1.3rem", height: "1.3rem", display: "inline-block", verticalAlign: "middle", marginRight: "0.3rem" }} /> Step 1: Choose Mandala (Book)
+                </label>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
                   gap: "1rem" }}>
                   {Array.from({length: 10}, (_, i) => i + 1).map(n => (
@@ -335,7 +341,9 @@ export default function VedaExplorer() {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem", color: "black" }}>
                   <div>
                     <label style={{ display: "block", marginBottom: "1rem", fontWeight: "700",
-                      color: "#1e1b4b", fontSize: "1.1rem" }}>🎵 Step 2: Select Sukta (Hymn)</label>
+                      color: "#1e1b4b", fontSize: "1.1rem" }}>
+                      <img src="/sukta.png" alt="Sukta" style={{ width: "1.3rem", height: "1.3rem", display: "inline-block", verticalAlign: "middle", marginRight: "0.3rem" }} /> Step 2: Select Sukta (Hymn)
+                    </label>
                     <SearchableDropdown value={hymnNum ? `Sukta ${hymnNum} (${indexData?.hymns?.find(h => h.hymn_number === Number(hymnNum))?.total_stanzas || 0} stanzas)` : ""}
                       placeholder="Search or select sukta..." options={getFilteredHymns()}
                       onSelect={(h) => { setHymnNum(h.hymn_number); setStanzaNum(""); setSloka(null);
@@ -348,7 +356,9 @@ export default function VedaExplorer() {
                   </div>
                   <div>
                     <label style={{ display: "block", marginBottom: "1rem", fontWeight: "700",
-                      color: "#1e1b4b", fontSize: "1.1rem" }}>📝 Step 3: Select Mantra (Stanza)</label>
+                      color: "#1e1b4b", fontSize: "1.1rem" }}>
+                      <img src="/mantra.png" alt="Mantra" style={{ width: "1.3rem", height: "1.3rem", display: "inline-block", verticalAlign: "middle", marginRight: "0.3rem" }} /> Step 3: Select Mantra (Stanza)
+                    </label>
                     <SearchableDropdown value={stanzaNum ? `Mantra ${stanzaNum}` : ""}
                       placeholder="Search or select mantra..." options={getFilteredStanzas()}
                       onSelect={(s) => { setStanzaNum(s); setSloka(null); setIsStanzaDropdownOpen(false); }}
@@ -371,8 +381,10 @@ export default function VedaExplorer() {
                 style={{ ...STYLES.btn, background: (!mandalaNum || !hymnNum || !stanzaNum) ? "#9ca3af" 
                   : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                   cursor: (!mandalaNum || !hymnNum || !stanzaNum) ? "not-allowed" : "pointer",
-                  boxShadow: (!mandalaNum || !hymnNum || !stanzaNum) ? "none" : "0 10px 30px rgba(102,126,234,0.3)" }}>
-                {loading ? "🔍 Searching..." : "🔍 Retrieve Sacred Verse"}
+                  boxShadow: (!mandalaNum || !hymnNum || !stanzaNum) ? "none" : "0 10px 30px rgba(102,126,234,0.3)",
+                  display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
+                <img src="/search1.png" alt="Search" style={{ width: "1.2rem", height: "1.2rem", filter: "brightness(0) invert(1)" }} />
+                {loading ? "Searching..." : "Retrieve Sacred Verse"}
               </button>
             </div>
           </>

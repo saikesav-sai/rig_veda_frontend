@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { FaDice, FaSearch, FaStar } from "react-icons/fa";
+import { FaDice, FaSearch } from "react-icons/fa";
 import { API_BASE } from "../config";
 import SearchResults from "./SearchResults";
 
 // Example searches
 const EXAMPLE_SEARCHES = [
-  { text: "Fire & Sacred Rituals", query: "fire sacrifice agni sacred ritual offerings", icon: "🔥" },
+  { text: "Fire & Sacred Rituals", query: "fire sacrifice agni sacred ritual offerings", icon: <img src="/mantra.png" alt="Fire" style={{ width: "2rem", height: "2rem" }} /> },
   { text: "Dawn Goddess & Light", query: "dawn goddess ushas light morning radiance", icon: "🌅" },
   { text: "Thunder God Indra", query: "indra thunder storm lightning vajra warrior", icon: "⚡" },
   { text: "Cosmic Creation & Universe", query: "creation universe cosmic order rita primordial", icon: "🌌" },
-  { text: "Divine Wisdom & Knowledge", query: "wisdom knowledge divine truth enlightenment", icon: "📿" },
+  { text: "Divine Wisdom & Knowledge", query: "wisdom knowledge divine truth enlightenment", icon: <img src="/book.png" alt="Wisdom" style={{ width: "2rem", height: "2rem" }} /> },
   { text: "Water & Purification", query: "water purification sacred rivers streams flowing", icon: "💧" }
 ];
 
@@ -57,20 +57,20 @@ export default function SemanticSearch({ onResults }) {
     const scoreRange = topScore - sortedScores[sortedScores.length - 1];
     
     let threshold, maxResults;
-    if (topScore >= 0.85 && gaps[0]?.gap > 0.1) {
-      threshold = Math.max(0.70, gaps[0].score);
+    if (topScore >= 0.5 && gaps[0]?.gap > 0.05) {
+      threshold = Math.max(0.2, gaps[0].score);
       maxResults = Math.min(15, gaps[0].position + 5);
-    } else if (gaps[0]?.gap > 0.08 && gaps[0].position < 25) {
-      threshold = Math.max(0.60, gaps[0].score);
+    } else if (gaps[0]?.gap > 0.04 && gaps[0].position < 25) {
+      threshold = Math.max(0.15, gaps[0].score);
       maxResults = Math.min(20, gaps[0].position + 8);
-    } else if (q1 >= 0.70 && (q1 - q3) < 0.15) {
-      threshold = Math.max(0.65, q3 - 0.05);
+    } else if (q1 >= 0.35 && (q1 - q3) < 0.15) {
+      threshold = Math.max(0.18, q3 - 0.02);
       maxResults = Math.min(18, Math.floor(sortedScores.length * 0.75) + 5);
-    } else if (scoreRange > 0.3) {
-      threshold = Math.max(0.55, q2);
+    } else if (scoreRange > 0.15) {
+      threshold = Math.max(0.15, q2);
       maxResults = Math.min(25, Math.floor(sortedScores.length * 0.5) + 10);
     } else {
-      threshold = Math.max(0.45, q3);
+      threshold = Math.max(0.1, q3);
       maxResults = Math.min(30, sortedScores.length);
     }
     return { threshold, maxResults };
@@ -79,7 +79,7 @@ export default function SemanticSearch({ onResults }) {
   const filterAndRankResults = (results, query) => {
     const resultsWithConfidence = results.map(verse => ({
       ...verse,
-      confidence: 1 - (verse.similarity_score || 0.5)
+      confidence: verse.similarity_score || 0.5
     }));
     resultsWithConfidence.sort((a, b) => b.confidence - a.confidence);
     const confidenceScores = resultsWithConfidence.map(v => v.confidence);
@@ -87,10 +87,10 @@ export default function SemanticSearch({ onResults }) {
       analyzeConfidenceDistribution(confidenceScores);
     
     const queryWords = query.trim().split(/\s+/).length;
-    let complexityAdjustment = queryWords <= 2 ? 0.05 : queryWords >= 6 ? -0.05 : 0;
+    let complexityAdjustment = queryWords <= 2 ? 0.02 : queryWords >= 6 ? -0.02 : 0;
     let maxResultsAdjustment = queryWords <= 2 ? -3 : queryWords >= 6 ? 5 : 0;
     
-    const minConfidence = Math.max(0.45, Math.min(0.80, distributionThreshold + complexityAdjustment));
+    const minConfidence = Math.max(0.1, Math.min(0.5, distributionThreshold + complexityAdjustment));
     const maxResults = Math.max(8, Math.min(30, distributionMaxResults + maxResultsAdjustment));
 
     let filteredResults = resultsWithConfidence
@@ -98,7 +98,7 @@ export default function SemanticSearch({ onResults }) {
       .slice(0, maxResults);
 
     if (filteredResults.length < 5 && resultsWithConfidence.length >= 5) {
-      const fallbackThreshold = Math.max(0.40, minConfidence - 0.15);
+      const fallbackThreshold = Math.max(0.08, minConfidence - 0.1);
       filteredResults = resultsWithConfidence
         .filter(verse => verse.confidence >= fallbackThreshold)
         .slice(0, Math.max(8, maxResults));
@@ -148,19 +148,29 @@ export default function SemanticSearch({ onResults }) {
     setLoading(true);
     setError(null);
     try {
+      console.log('Fetching from:', `${API_BASE}/semantic/search`);
+      console.log('Request body:', { query, top_k: 50 });
+      
       const response = await fetch(`${API_BASE}/semantic/search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query, top_k: 50 }),
       });
+      
+      console.log('Response status:', response.status);
       const data = await response.json();
+      console.log('Response data:', data);
+      
       if (data.error) {
         setError(data.error);
         setSearchResults(null);
         if (onResults) onResults(null);
       } else {
+        console.log('Raw results count:', data.results?.length);
         const { filteredResults, totalFetched, highConfidenceCount, averageConfidence } = 
           filterAndRankResults(data.results, query);
+        console.log('Filtered results count:', filteredResults.length);
+        
         const transformedData = {
           intent: 'semantic_search',
           query: data.query,
@@ -169,11 +179,13 @@ export default function SemanticSearch({ onResults }) {
           searchMetadata: { totalFetched, displayCount: filteredResults.length,
             highConfidenceCount, averageConfidence }
         };
+        console.log('Transformed data:', transformedData);
         setSearchResults(transformedData);
         setShowResults(true);
         if (onResults) onResults(transformedData);
       }
     } catch (err) {
+      console.error('Search error:', err);
       setError("Failed to search. Please try again.");
       setSearchResults(null);
       if (onResults) onResults(null);
@@ -203,8 +215,7 @@ export default function SemanticSearch({ onResults }) {
             <div style={{ textAlign: "center", marginBottom: "3rem" }}>
               <h2 style={{ fontSize: "3.5rem", fontWeight: "700", color: "#1e1b4b",
                 marginBottom: "1rem", letterSpacing: "-1px", lineHeight: "1.2" }}>
-                <FaStar style={{ fontSize: "2.5rem", verticalAlign: "middle", marginRight: "0.5rem",
-                  color: "#f59e0b" }} />
+                <img src="/search2.png" alt="Search" style={{ width: "3rem", height: "3rem", display: "inline-block", verticalAlign: "middle", marginRight: "0.5rem" }} />
                 Semantic Search
               </h2>
               <p style={{ color: "#475569", fontSize: "1.2rem", lineHeight: "1.6",
@@ -269,7 +280,7 @@ export default function SemanticSearch({ onResults }) {
             
             <div style={{ marginBottom: "3rem" }}>
               <h3 style={{ textAlign: "center", marginBottom: "2rem", color: "#1e1b4b",
-                fontSize: "1.8rem", fontWeight: "700" }}>🎯 Explore by Theme</h3>
+                fontSize: "1.8rem", fontWeight: "700" }}>Explore by Theme</h3>
               <div style={{ display: "grid",
                 gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}
                 className="responsive-grid">
@@ -285,7 +296,7 @@ export default function SemanticSearch({ onResults }) {
                       boxShadow: "0 10px 30px rgba(0,0,0,0.08)", fontWeight: "600",
                       fontSize: "1.15rem", color: "#1e1b4b", opacity: loading ? 0.6 : 1,
                       backdropFilter: "blur(10px)" }} className="card-hover mobile-padding">
-                    <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>{icon}</div>
+                    <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>{typeof icon === 'string' ? icon : icon}</div>
                     {text}
                   </button>
                 ))}
