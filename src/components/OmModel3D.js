@@ -1,6 +1,6 @@
-import { Environment, Float, MeshDistortMaterial, OrbitControls, Sphere, Stars, useGLTF } from '@react-three/drei';
+import { Environment, Float, OrbitControls, useGLTF } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
-import React, { Suspense, useRef } from 'react';
+import { Suspense, useRef } from 'react';
 
 // Om Symbol Model Component
 function OmModel({ scale = 1 }) {
