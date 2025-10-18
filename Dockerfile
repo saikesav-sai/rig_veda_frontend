@@ -1,12 +1,16 @@
 FROM node:18-alpine
 
 # Install dependencies for cloudflared
-RUN apk add --no-cache wget && \
-    wget -O /usr/local/bin/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 && \
-    chmod +x /usr/local/bin/cloudflared
+# RUN apk add --no-cache wget && \
+#     wget -O /usr/local/bin/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 && \
+#     chmod +x /usr/local/bin/cloudflared
 
 # Set work directory
 WORKDIR /app
+
+# Accept build argument for API base URL
+ARG REACT_APP_API_BASE
+ENV REACT_APP_API_BASE=$REACT_APP_API_BASE
 
 # Copy package files
 COPY package*.json ./
@@ -17,7 +21,7 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Build the React app
+# Build the React app (will use REACT_APP_API_BASE from ENV)
 RUN npm run build
 
 # Install serve to serve the built app
@@ -26,9 +30,8 @@ RUN npm install -g serve
 # Expose port
 EXPOSE 8009
 
-# Create a startup script
-RUN echo '#!/bin/sh\nserve -s build -l 8009 &\nsleep 2\ncloudflared tunnel --no-autoupdate run --token eyJhIjoiOGJlNWJkYzMzYjZiNDQ0MTI3YjUwMzBlZjQyNTJlZTAiLCJ0IjoiOTI0YmJiOGMtMTE2ZC00ZjVjLWIyY2QtMmYyZTA2ZjU2NDhmIiwicyI6IllqWTJOV1ZpTlRNdE5qQTJZaTAwWTJNNUxUazBPVGd0TkRNME5UUTNPV1prWkdSaiJ9' > /app/start.sh && \
-    chmod +x /app/start.sh
+# Create serve configuration to allow CORS
+RUN echo '{"headers": [{"source": "**", "headers": [{"key": "Access-Control-Allow-Origin", "value": "*"}, {"key": "Access-Control-Allow-Methods", "value": "GET, POST, PUT, DELETE, OPTIONS"}, {"key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization"}]}]}' > /app/serve.json
 
-# Run the startup script
-CMD ["/app/start.sh"]
+# Start React app (tunnel handled separately)
+CMD ["serve", "-s", "build", "-l", "8009", "--cors", "--no-request-logging"]
