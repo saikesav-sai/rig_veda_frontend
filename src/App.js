@@ -1,7 +1,11 @@
+import { useEffect } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import ChatBot from "./components/ChatBot";
+import Credits from "./components/Credits";
+import Footer from "./components/Footer";
 import Hero from "./components/Hero";
+import PrivacyPolicy from "./components/PrivacyPolicy";
 import QuoteCarousel from "./components/QuoteCarousel";
 import SemanticSearch from "./components/SemanticSearch";
 import VedaExplorer from "./components/VedaExplorer";
@@ -68,6 +72,11 @@ function App() {
   const location = useLocation();
   const currentPage = location.pathname === '/' ? 'home' : location.pathname.replace(/^\//, '');
 
+  // Scroll to top whenever the route changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
   const features = [
     { gradient: GRADIENTS.green, title: "Veda Explorer", icon: <img src="/mandala.png" alt="Explorer" style={{ width: "4rem", height: "4rem", filter: "brightness(0) invert(1)" }} />, page: "explorer",
       description: "Navigate the Rig Veda systematically by Mandala, Hymn, and Verse, complete with rich metadata and accompanying audio." },
@@ -88,7 +97,7 @@ function App() {
 
   const renderHomePage = () => (
     <div style={{ background: GRADIENTS.background, minHeight: "calc(100vh - 120px)" }}>
-      <div style={{ position: "relative", overflow: "hidden", paddingTop: "3rem" }}>
+      <div style={{ position: "relative", overflow: "hidden", paddingTop: ".1rem" }}>
         {[{ top: "-100px", right: "-100px", w: "400px", h: "400px", anim: "8s" },
           { bottom: "-150px", left: "-150px", w: "500px", h: "500px", anim: "10s reverse" }]
           .map((d, i) => (
@@ -96,7 +105,7 @@ function App() {
               background: `radial-gradient(circle, rgba(${i ? '102, 126, 234' : '245, 158, 11'}, ${i ? '0.08' : '0.1'}) 0%, transparent 70%)`,
               borderRadius: "50%", animation: `float-gentle ${d.anim} ease-in-out infinite` }} />
           ))}
-        <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 2rem",
+        <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 1rem",
           position: "relative", zIndex: 10 }}>
           <Hero navigateToPage={navigateToPage} />
         </div>
@@ -202,7 +211,10 @@ function App() {
         <Route path="/search" element={<SemanticSearch />} />
         <Route path="/chat" element={<ChatBot />} />
         <Route path="/explorer" element={<VedaExplorer />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/credits" element={<Credits />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

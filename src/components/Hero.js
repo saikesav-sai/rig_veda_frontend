@@ -12,7 +12,7 @@ export default function Hero({ navigateToPage }) {
         alignItems: 'center',
         justifyContent: 'center'
       }}>
-        <OmModel3D simple={true} scale={.34} />
+        <OmModel3D simple={true} scale={0.33} />
       </div>
       
       <div className={styles.heroContent}>
