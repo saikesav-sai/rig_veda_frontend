@@ -250,6 +250,35 @@ export default function VedaExplorer() {
     setTimeout(() => handleSearch(), 200);
   };
 
+  const handleNextSloka = () => {
+    if (!mandalaNum || !hymnNum || !stanzaNum) return;
+    
+    const currentStanza = Number(stanzaNum);
+    const hymn = indexData?.hymns?.find(h => h.hymn_number === Number(hymnNum));
+    const totalStanzas = hymn?.total_stanzas || 0;
+    
+    if (currentStanza < totalStanzas) {
+      // Next stanza in same hymn
+      setStanzaNum((currentStanza + 1).toString());
+      setSloka(null);
+      setError(null);
+      if (audioRef.current) { audioRef.current.pause(); audioRef.current.currentTime = 0; }
+      setPlaying(false);
+      
+      setLoading(true);
+      fetch(`${API_BASE}/sloka/${mandalaNum}/${hymnNum}/${currentStanza + 1}`)
+        .then(r => r.json())
+        .then(data => {
+          setSloka(data.error ? null : data);
+          setError(data.error || null);
+        })
+        .catch(() => setError("Failed to fetch"))
+        .finally(() => setLoading(false));
+    } else {
+      setError("This is the last mantra in this sukta");
+    }
+  };
+
   const getCurrentStep = () => {
     if (!mandalaNum) return 1;
     if (!hymnNum) return 2;
@@ -376,7 +405,7 @@ export default function VedaExplorer() {
               )}
             </div>
 
-            <div style={{ textAlign: "center", margin : "10rem auto 3rem auto" }}>
+            <div style={{ textAlign: "center", margin : "10rem auto 3rem auto", display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
               <button onClick={handleSearch} disabled={loading || !mandalaNum || !hymnNum || !stanzaNum}
                 style={{ ...STYLES.btn, background: (!mandalaNum || !hymnNum || !stanzaNum) ? "#9ca3af" 
                   : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
@@ -386,6 +415,21 @@ export default function VedaExplorer() {
                 <img src="/search1.png" alt="Search" style={{ width: "1.2rem", height: "1.2rem", filter: "brightness(0) invert(1)" }} />
                 {loading ? "Searching..." : "Retrieve Sacred Verse"}
               </button>
+              
+              {sloka && (
+                <button onClick={handleNextSloka} 
+                  style={{ 
+                    ...STYLES.btn, 
+                    background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+                    boxShadow: "0 8px 20px rgba(16, 185, 129, 0.4)",
+                    display: "inline-flex", 
+                    alignItems: "center", 
+                    gap: "0.75rem",
+                    fontSize: "1.1rem"
+                  }}>
+                  Next Mantra →
+                </button>
+              )}
             </div>
           </>
         ) : (
