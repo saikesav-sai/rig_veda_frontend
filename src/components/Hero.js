@@ -23,7 +23,7 @@ export default function Hero({ navigateToPage }) {
 
         <div className={styles.heroActions}>
           <button className={`${styles.ctaPrimary} ${styles.btnShine}`} onClick={() => navigateToPage('explorer')}>
-            <img src="/mandala.png" alt="Browse" className={styles.btnIcon} style={{ width: "1.3rem", height: "1.3rem" }} />
+            <img src="/mandala.png" alt="Browse" className={styles.btnIcon} style={{ width: "1.3rem", height: "1.3rem",filter: "brightness(0) invert(1)" }} />
             Browse Mandalas
           </button>
           <button className={`${styles.ctaGhost} ${styles.btnHover}`} onClick={() => navigateToPage('search')}>
@@ -51,7 +51,7 @@ export default function Hero({ navigateToPage }) {
         <span style={{
           fontSize: '0.5rem',
           fontWeight: '600',
-          color: '#667eea',
+          color: '#fbbf24',
           textTransform: 'uppercase',
           letterSpacing: '1px'
         }}>
@@ -60,7 +60,7 @@ export default function Hero({ navigateToPage }) {
         <div style={{
           width: '20px',
           height: '40px',
-          border: '2px solid #667eea',
+          border: '2px solid #fbbf24',
           borderRadius: '20px',
           position: 'relative',
           display: 'flex',
@@ -70,14 +70,14 @@ export default function Hero({ navigateToPage }) {
           <div style={{
             width: '6px',
             height: '10px',
-            background: '#667eea',
+            background: '#fbbf24',
             borderRadius: '3px',
             animation: 'scroll 1.5s infinite'
           }} />
         </div>
         <span style={{
           fontSize: '1.2rem',
-          color: '#667eea'
+          color: '#fbbf24'
         }}>
           ↓
         </span>

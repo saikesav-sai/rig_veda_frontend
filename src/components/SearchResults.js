@@ -10,14 +10,14 @@ const MandalaBackground = () => (
     <svg viewBox="0 0 600 600" style={{ width: "100%", height: "100%" }}>
       <defs>
         <radialGradient id="mandala-gradient-results" cx="50%" cy="50%" r="60%">
-          <stop offset="0%" stopColor="#667eea" stopOpacity="0.3" />
-          <stop offset="50%" stopColor="#764ba2" stopOpacity="0.15" />
-          <stop offset="100%" stopColor="#f093fb" stopOpacity="0.05" />
+          <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.3" />
+          <stop offset="50%" stopColor="#14b8a6" stopOpacity="0.15" />
+          <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.05" />
         </radialGradient>
       </defs>
       <circle cx="300" cy="300" r="140" fill="url(#mandala-gradient-results)" />
       {[...Array(12)].map((_, i) => (
-        <ellipse key={i} cx="300" cy="120" rx="40" ry="14" fill="rgba(118,75,162,0.1)"
+        <ellipse key={i} cx="300" cy="120" rx="40" ry="14" fill="rgba(251,191,36,0.1)"
           transform={`rotate(${(i / 12) * 360} 300 300)`} />
       ))}
     </svg>
@@ -27,13 +27,13 @@ const MandalaBackground = () => (
 // Intent configuration
 const getIntentConfig = (intent) => {
   const configs = {
-    semantic_search: { color: '#6366f1', bg: '#f0f9ff', border: '#0ea5e9',
+    semantic_search: { color: '#fbbf24', bg: '#1e293b', border: '#14b8a6',
       icon: '🔍', title: 'Semantic Search Results' },
-    verse_lookup: { color: '#059669', bg: '#f0fdf4', border: '#22c55e',
+    verse_lookup: { color: '#14b8a6', bg: '#1e293b', border: '#fbbf24',
       icon: '📖', title: 'Verse Lookup' },
-    explanation: { color: '#dc2626', bg: '#fef2f2', border: '#f87171',
+    explanation: { color: '#f59e0b', bg: '#1e293b', border: '#14b8a6',
       icon: '💡', title: 'Explanation' },
-    default: { color: '#6b7280', bg: '#f9fafb', border: '#d1d5db',
+    default: { color: '#fbbf24', bg: '#1e293b', border: '#14b8a6',
       icon: '💬', title: 'Search Results' }
   };
   return configs[intent] || configs.default;
@@ -48,14 +48,14 @@ const AudioButton = ({ verse, playingAudio, audioLoading, toggleAudio }) => {
     <button onClick={() => toggleAudio(verse)} disabled={isLoading}
       style={{ display: "flex", alignItems: "center", gap: "0.75rem",
         background: isPlaying 
-          ? "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)" 
-          : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        color: "white", border: "none", padding: "1rem 1.75rem", borderRadius: "50px",
+          ? "linear-gradient(135deg, #dc2626 0%, #991b1b 100%)" 
+          : "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
+        color: isPlaying ? "#f8fafc" : "#0f172a", border: "none", padding: "1rem 1.75rem", borderRadius: "50px",
         fontWeight: "700", cursor: isLoading ? "not-allowed" : "pointer",
         transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)", fontSize: "1rem",
         minWidth: "120px", justifyContent: "center",
-        boxShadow: isPlaying ? "0 10px 30px rgba(239,68,68,0.3)" 
-          : "0 10px 30px rgba(102,126,234,0.3)" }}>
+        boxShadow: isPlaying ? "0 10px 30px rgba(220,38,38,0.4)" 
+          : "0 10px 30px rgba(251,191,36,0.4)" }}>
       {isLoading ? (
         <>
           <div style={{ width: "14px", height: "14px", border: "2px solid #ffffff40",
@@ -75,13 +75,13 @@ const AudioButton = ({ verse, playingAudio, audioLoading, toggleAudio }) => {
 // Verse Card Component
 const VerseCard = ({ verse, index, playingAudio, audioLoading, toggleAudio }) => (
   <div key={verse.location || index}
-    style={{ background: "white", borderRadius: "24px", padding: "2.5rem",
-      boxShadow: "0 15px 50px rgba(0,0,0,0.1)", border: "2px solid rgba(102,126,234,0.1)",
+    style={{ background: "linear-gradient(135deg, #1e293b 0%, #334155 100%)", borderRadius: "24px", padding: "2.5rem",
+      boxShadow: "0 15px 50px rgba(0,0,0,0.3)", border: "2px solid rgba(251,191,36,0.2)",
       position: "relative", transition: "all 0.3s ease" }}>
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
       marginBottom: "2rem", flexWrap: "wrap", gap: "1rem" }}>
       <h4 style={{ margin: 0, fontSize: "1.5rem", fontWeight: "800",
-        background: "linear-gradient(135deg, #1e1b4b 0%, #6b21a8 100%)",
+        background: "linear-gradient(135deg, #fbbf24 0%, #14b8a6 100%)",
         WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
         display: "flex", alignItems: "center", gap: "0.5rem" }}>
         📍 {verse.location}
@@ -105,25 +105,25 @@ const VerseCard = ({ verse, index, playingAudio, audioLoading, toggleAudio }) =>
     </div>
 
     {verse.sanskrit && (
-      <div style={{ background: "linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08))",
-        border: "3px solid rgba(102,126,234,0.2)", borderRadius: "20px", padding: "2rem",
+      <div style={{ background: "linear-gradient(135deg, rgba(251,191,36,0.15), rgba(20,184,166,0.1))",
+        border: "3px solid rgba(251,191,36,0.3)", borderRadius: "20px", padding: "2rem",
         marginBottom: "2rem" }}>
-        <div style={{ textAlign: "center", marginBottom: "1rem", color: "#667eea",
+        <div style={{ textAlign: "center", marginBottom: "1rem", color: "#fbbf24",
           fontWeight: "700", fontSize: "0.9rem", letterSpacing: "1px" }}>
           🕉️ SANSKRIT TEXT 🕉️
         </div>
-        <p style={{ fontSize: "1.5rem", textAlign: "center", color: "#1e1b4b",
+        <p style={{ fontSize: "1.5rem", textAlign: "center", color: "#f8fafc",
           lineHeight: "2", fontFamily: "'Noto Serif Devanagari', serif",
           fontWeight: "600", margin: 0 }}>{verse.sanskrit}</p>
       </div>
     )}
 
     {verse.transliteration && (
-      <div style={{ background: "#f8fafc", borderRadius: "12px", padding: "1.5rem",
-        marginBottom: "2rem" }}>
-        <span style={{ color: "#667eea", fontSize: "0.9rem", fontWeight: "700",
+      <div style={{ background: "rgba(15,23,42,0.6)", borderRadius: "12px", padding: "1.5rem",
+        marginBottom: "2rem", border: "1px solid rgba(251,191,36,0.2)" }}>
+        <span style={{ color: "#fbbf24", fontSize: "0.9rem", fontWeight: "700",
           letterSpacing: "0.5px" }}>Transliteration</span>
-        <p style={{ fontSize: "1.1rem", color: "#475569", fontStyle: "italic",
+        <p style={{ fontSize: "1.1rem", color: "#cbd5e1", fontStyle: "italic",
           marginTop: "0.8rem", lineHeight: "1.6", margin: "0.8rem 0 0 0" }}>
           {verse.transliteration}
         </p>
@@ -131,11 +131,11 @@ const VerseCard = ({ verse, index, playingAudio, audioLoading, toggleAudio }) =>
     )}
 
     {verse.translation && (
-      <div style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,150,105,0.08))",
-        border: "3px solid rgba(16,185,129,0.25)", borderRadius: "20px", padding: "2rem" }}>
-        <span style={{ color: "#10b981", fontSize: "1rem", fontWeight: "700",
+      <div style={{ background: "linear-gradient(135deg, rgba(20,184,166,0.2), rgba(13,148,136,0.15))",
+        border: "3px solid rgba(20,184,166,0.4)", borderRadius: "20px", padding: "2rem" }}>
+        <span style={{ color: "#14b8a6", fontSize: "1rem", fontWeight: "700",
           letterSpacing: "0.5px" }}>ENGLISH TRANSLATION</span>
-        <p style={{ fontSize: "1.2rem", color: "#1e1b4b", lineHeight: "1.8",
+        <p style={{ fontSize: "1.2rem", color: "#f8fafc", lineHeight: "1.8",
           fontStyle: "italic", marginTop: "1rem", margin: "1rem 0 0 0" }}>
           "{verse.translation}"
         </p>
@@ -143,19 +143,19 @@ const VerseCard = ({ verse, index, playingAudio, audioLoading, toggleAudio }) =>
     )}
 
     {verse.translations && Object.keys(verse.translations).filter(key => key.toLowerCase() !== 'griffith').length > 0 && (
-      <div style={{ borderTop: "2px solid #f1f5f9", paddingTop: "2rem", marginTop: "2rem" }}>
-        <div style={{ fontSize: "1rem", fontWeight: "700", color: "#64748b",
+      <div style={{ borderTop: "2px solid rgba(251,191,36,0.3)", paddingTop: "2rem", marginTop: "2rem" }}>
+        <div style={{ fontSize: "1rem", fontWeight: "700", color: "#fbbf24",
           marginBottom: "1rem", letterSpacing: "0.5px" }}>📖 Alternative Translations</div>
         {Object.entries(verse.translations)
           .filter(([key]) => key.toLowerCase() !== 'griffith')
           .map(([translator, translation]) => (
           <div key={translator}
-            style={{ background: "linear-gradient(135deg, rgba(248,250,252,1), rgba(241,245,249,1))",
+            style={{ background: "linear-gradient(135deg, rgba(15,23,42,0.8), rgba(30,41,59,0.6))",
               borderRadius: "12px", padding: "1.5rem", marginBottom: "1rem",
-              border: "1px solid #e2e8f0" }}>
-            <div style={{ fontWeight: "700", color: "#1e293b", marginBottom: "0.75rem",
+              border: "1px solid rgba(20,184,166,0.3)" }}>
+            <div style={{ fontWeight: "700", color: "#14b8a6", marginBottom: "0.75rem",
               textTransform: "capitalize", fontSize: "0.95rem" }}>{translator}:</div>
-            <div style={{ color: "#475569", fontStyle: "italic", lineHeight: "1.6",
+            <div style={{ color: "#cbd5e1", fontStyle: "italic", lineHeight: "1.6",
               fontSize: "1.05rem" }}>"{translation}"</div>
           </div>
         ))}
@@ -169,51 +169,51 @@ const SummarySection = ({ answer, summary, config }) => {
   if (!answer && !summary) return null;
   
   return (
-    <div style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(254,252,232,0.95))",
+    <div style={{ background: "linear-gradient(135deg, #1e293b 0%, #334155 100%)",
       borderRadius: "24px", padding: "2.5rem", marginBottom: "3rem",
-      boxShadow: "0 15px 50px rgba(102,126,234,0.15)",
-      border: `2px solid ${config.border}40`, backdropFilter: "blur(10px)" }}>
+      boxShadow: "0 15px 50px rgba(0,0,0,0.4)",
+      border: `2px solid ${config.border}`, backdropFilter: "blur(10px)" }}>
       <h3 style={{ color: config.color, marginBottom: "1.5rem", fontSize: "1.8rem",
         fontWeight: "700", display: "flex", alignItems: "center", gap: "0.5rem" }}>
         🤖 {answer ? 'AI Analysis' : 'Search Summary'}
       </h3>
 
       {(answer?.summary || summary) && (
-        <div style={{ background: "linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.05))",
-          border: `2px solid ${config.border}60`, borderRadius: "16px", padding: "1.75rem",
+        <div style={{ background: "linear-gradient(135deg, rgba(251,191,36,0.15), rgba(20,184,166,0.1))",
+          border: `2px solid ${config.border}`, borderRadius: "16px", padding: "1.75rem",
           marginBottom: answer?.interpretation || answer?.reflection ? "1.5rem" : "0" }}>
           <div style={{ fontWeight: "700", color: config.color, marginBottom: "0.75rem",
             fontSize: "1.1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
             📝 Summary
           </div>
-          <div style={{ lineHeight: "1.8", fontSize: "1.1rem", color: "#1e1b4b" }}>
+          <div style={{ lineHeight: "1.8", fontSize: "1.1rem", color: "#f8fafc" }}>
             {answer?.summary || summary}
           </div>
         </div>
       )}
 
       {answer?.interpretation && (
-        <div style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,150,105,0.05))",
-          border: "2px solid rgba(16,185,129,0.3)", borderRadius: "16px", padding: "1.75rem",
+        <div style={{ background: "linear-gradient(135deg, rgba(20,184,166,0.2), rgba(13,148,136,0.15))",
+          border: "2px solid rgba(20,184,166,0.4)", borderRadius: "16px", padding: "1.75rem",
           marginBottom: answer?.reflection ? "1.5rem" : "0" }}>
-          <div style={{ fontWeight: "700", color: "#16a34a", marginBottom: "0.75rem",
+          <div style={{ fontWeight: "700", color: "#14b8a6", marginBottom: "0.75rem",
             fontSize: "1.1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
             🎯 Interpretation
           </div>
-          <div style={{ lineHeight: "1.8", fontSize: "1.1rem", color: "#1e1b4b" }}>
+          <div style={{ lineHeight: "1.8", fontSize: "1.1rem", color: "#f8fafc" }}>
             {answer.interpretation}
           </div>
         </div>
       )}
 
       {answer?.reflection && (
-        <div style={{ background: "linear-gradient(135deg, rgba(245,158,11,0.08), rgba(217,119,6,0.05))",
-          border: "2px solid rgba(245,158,11,0.3)", borderRadius: "16px", padding: "1.75rem" }}>
-          <div style={{ fontWeight: "700", color: "#ca8a04", marginBottom: "0.75rem",
+        <div style={{ background: "linear-gradient(135deg, rgba(245,158,11,0.2), rgba(217,119,6,0.15))",
+          border: "2px solid rgba(245,158,11,0.4)", borderRadius: "16px", padding: "1.75rem" }}>
+          <div style={{ fontWeight: "700", color: "#f59e0b", marginBottom: "0.75rem",
             fontSize: "1.1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
             🔮 Reflection
           </div>
-          <div style={{ lineHeight: "1.8", fontSize: "1.1rem", color: "#1e1b4b" }}>
+          <div style={{ lineHeight: "1.8", fontSize: "1.1rem", color: "#f8fafc" }}>
             {answer.reflection}
           </div>
         </div>
@@ -287,7 +287,7 @@ export default function SearchResults({ results, onBack }) {
 
   return (
     <div style={{ minHeight: "100vh",
-      background: "linear-gradient(135deg, #fefce8 0%, #fff7ed 50%, #fef3c7 100%)",
+      background: "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)",
       padding: "2rem 0", position: "relative", overflow: "hidden" }}>
       <MandalaBackground />
       <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
@@ -297,31 +297,31 @@ export default function SearchResults({ results, onBack }) {
         <div style={{ display: "flex", alignItems: "center", marginBottom: "2rem",
           gap: "1rem", flexWrap: "wrap" }}>
           <button onClick={onBack}
-            style={{ background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-              color: "white", border: "none", borderRadius: "50px", padding: "1rem 2rem",
+            style={{ background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
+              color: "#0f172a", border: "none", borderRadius: "50px", padding: "1rem 2rem",
               cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem",
               fontWeight: "700", fontSize: "1.05rem",
               transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-              boxShadow: "0 10px 30px rgba(102,126,234,0.3)" }}>
+              boxShadow: "0 10px 30px rgba(251,191,36,0.4)" }}>
             <FaArrowLeft /> Back to Search
           </button>
           <div>
-            <h2 style={{ margin: 0, color: "#1e1b4b", fontSize: "2rem", fontWeight: "700" }}>
+            <h2 style={{ margin: 0, color: "#fbbf24", fontSize: "2rem", fontWeight: "700" }}>
               {config.icon} {config.title}
             </h2>
           </div>
         </div>
 
         {audioError && (
-          <div style={{ background: "linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.05))",
-            border: "2px solid rgba(239,68,68,0.3)", borderRadius: "16px",
+          <div style={{ background: "linear-gradient(135deg, rgba(220,38,38,0.2), rgba(153,27,27,0.15))",
+            border: "2px solid rgba(220,38,38,0.5)", borderRadius: "16px",
             padding: "1.25rem 1.5rem", marginBottom: "2rem", display: "flex",
-            alignItems: "center", gap: "0.75rem", color: "#dc2626", fontWeight: "600",
-            boxShadow: "0 4px 12px rgba(239,68,68,0.15)" }}>
+            alignItems: "center", gap: "0.75rem", color: "#fca5a5", fontWeight: "600",
+            boxShadow: "0 4px 12px rgba(220,38,38,0.3)" }}>
             <span style={{ fontSize: "1.5rem" }}>⚠️</span>
             <span style={{ flex: 1 }}>{audioError}</span>
             <button onClick={() => setAudioError(null)}
-              style={{ background: "none", border: "none", color: "#dc2626",
+              style={{ background: "none", border: "none", color: "#fca5a5",
                 cursor: "pointer", fontSize: "1.5rem", padding: "0.2rem",
                 fontWeight: "bold", transition: "transform 0.2s" }}>×</button>
           </div>
@@ -333,7 +333,7 @@ export default function SearchResults({ results, onBack }) {
           <div style={{ marginBottom: "2rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between",
               alignItems: "center", marginBottom: "2rem", flexWrap: "wrap", gap: "1rem" }}>
-              <h3 style={{ color: "#1e1b4b", margin: 0, fontSize: "1.8rem", fontWeight: "700" }}>
+              <h3 style={{ color: "#fbbf24", margin: 0, fontSize: "1.8rem", fontWeight: "700" }}>
                 📚 Found {displayVerses.length} {displayVerses.length === 1 ? 'Verse' : 'Verses'}
               </h3>
             </div>
@@ -349,14 +349,14 @@ export default function SearchResults({ results, onBack }) {
 
         {(!displayVerses || displayVerses.length === 0) && !answer && !summary && (
           <div style={{ textAlign: "center",
-            background: "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(254,252,232,0.95))",
+            background: "linear-gradient(135deg, #1e293b 0%, #334155 100%)",
             padding: "4rem 2rem", borderRadius: "24px",
-            boxShadow: "0 15px 50px rgba(0,0,0,0.1)",
-            border: "2px solid rgba(102,126,234,0.1)", backdropFilter: "blur(10px)" }}>
+            boxShadow: "0 15px 50px rgba(0,0,0,0.4)",
+            border: "2px solid rgba(251,191,36,0.3)", backdropFilter: "blur(10px)" }}>
             <div style={{ fontSize: "4rem", marginBottom: "1.5rem" }}>🔍</div>
             <div style={{ fontSize: "1.5rem", fontWeight: "700", marginBottom: "0.75rem",
-              color: "#1e1b4b" }}>No results found</div>
-            <div style={{ fontSize: "1.1rem", color: "#475569", lineHeight: "1.6" }}>
+              color: "#fbbf24" }}>No results found</div>
+            <div style={{ fontSize: "1.1rem", color: "#cbd5e1", lineHeight: "1.6" }}>
               Try different keywords or explore our suggested themes!
             </div>
           </div>

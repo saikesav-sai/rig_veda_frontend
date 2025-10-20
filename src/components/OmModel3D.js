@@ -32,7 +32,7 @@ function Loader() {
   return (
     <mesh>
       <torusGeometry args={[1, 0.4, 16, 100]} />
-      <meshStandardMaterial color="#667eea" />
+      <meshStandardMaterial color="#fbbf24" />
     </mesh>
   );
 }
@@ -58,8 +58,8 @@ export default function OmModel3D({
     position: 'relative',
     borderRadius: simple ? '0' : '24px',
     overflow: 'hidden',
-    boxShadow: simple ? 'none' : '0 20px 60px rgba(102, 126, 234, 0.4)',
-    background: simple ? 'transparent' : 'linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%)'
+    boxShadow: simple ? 'none' : '0 20px 60px rgba(251, 191, 36, 0.4)',
+    background: simple ? 'transparent' : 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   };
 
   return (
@@ -76,12 +76,12 @@ export default function OmModel3D({
         style={{ background: 'transparent' }}
       >
         {/* Background color (only for complex mode) */}
-        {!simple && <color attach="background" args={['#0a0520']} />}
+        {!simple && <color attach="background" args={['#0f172a']} />}
         
         {/* Lighting Setup */}
         <ambientLight intensity={simple ? 0.5 : 0.3} />
         <pointLight position={[10, 10, 10]} intensity={1.2} color="#ffffff" />
-        <pointLight position={[-10, -5, -5]} intensity={0.6} color="#667eea" />
+        <pointLight position={[-10, -5, -5]} intensity={0.6} color="#fbbf24" />
         <spotLight
           position={[5, 10, 5]}
           angle={0.5}
@@ -89,7 +89,7 @@ export default function OmModel3D({
           intensity={1}
           color="#f59e0b"
         />
-        {!simple && <pointLight position={[0, 0, 5]} intensity={0.5} color="#10b981" />}
+        {!simple && <pointLight position={[0, 0, 5]} intensity={0.5} color="#14b8a6" />}
         
         {/* Environment for better reflections */}
         <Environment preset="sunset" />

@@ -10,13 +10,13 @@ import QuoteCarousel from "./components/QuoteCarousel";
 import SemanticSearch from "./components/SemanticSearch";
 import VedaExplorer from "./components/VedaExplorer";
 
-// Common gradients
+// 🌙 Midnight Sanskrit - Unique Color Palette
 const GRADIENTS = {
-  purple: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-  orange: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-  green: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-  indigo: "linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%)",
-  background: "linear-gradient(135deg, #fefce8 0%, #fff7ed 50%, #fef3c7 100%)"
+  purple: "linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)", // Sacred Teal
+  orange: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)", // Luminous Amber
+  green: "linear-gradient(135deg, #0d9488 0%, #115e59 100%)", // Deep Teal
+  indigo: "linear-gradient(135deg, #1e293b 0%, #334155 100%)", // Midnight to Twilight
+  background: "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)" // Deep night gradient
 };
 
 // Reusable feature card
@@ -47,8 +47,8 @@ const FeatureCard = ({ gradient, title, description, icon, onClick, delay = 0 })
 const StatItem = ({ value, label, sublabel, color }) => (
   <div>
     <div style={{ fontSize: "3rem", fontWeight: "800", color, marginBottom: "0.5rem" }}>{value}</div>
-    <div style={{ fontSize: "1.1rem", color: "#6b7280", fontWeight: "600" }}>{label}</div>
-    <div style={{ fontSize: "0.9rem", color: "#9ca3af", marginTop: "0.25rem" }}>{sublabel}</div>
+    <div style={{ fontSize: "1.1rem", color: "#cbd5e1", fontWeight: "600" }}>{label}</div>
+    <div style={{ fontSize: "0.9rem", color: "#94a3b8", marginTop: "0.25rem" }}>{sublabel}</div>
   </div>
 );
 
@@ -56,11 +56,11 @@ const StatItem = ({ value, label, sublabel, color }) => (
 const NavButton = ({ page, currentPage, onClick, icon, label }) => (
   <button onClick={() => onClick(page)}
     style={{ padding: "0.6rem 1.2rem", fontSize: "0.95rem", fontWeight: "600",
-      background: currentPage === page ? GRADIENTS.purple : "white",
-      color: currentPage === page ? "white" : "#667eea",
-      border: currentPage === page ? "none" : "2px solid #e2e8f0", borderRadius: "50px",
+      background: currentPage === page ? GRADIENTS.orange : "rgba(30, 41, 59, 0.8)",
+      color: currentPage === page ? "#0f172a" : "#fbbf24",
+      border: currentPage === page ? "none" : "2px solid rgba(251, 191, 36, 0.3)", borderRadius: "50px",
       cursor: "pointer", transition: "all 0.3s ease",
-      boxShadow: currentPage === page ? "0 4px 15px rgba(102, 126, 234, 0.3)" : "none" }}>
+      boxShadow: currentPage === page ? "0 4px 15px rgba(251, 191, 36, 0.4)" : "none" }}>
     {icon} {label}
   </button>
 );
@@ -89,10 +89,10 @@ function App() {
   ];
 
   const stats = [
-    { value: "10", label: "Mandalas", sublabel: "Sacred Books", color: "#667eea" },
-    { value: "1,028", label: "Suktas", sublabel: "Hymns", color: "#f59e0b" },
-    { value: "10,552", label: "Mantras", sublabel: "Verses", color: "#10b981" },
-    { value: "3,500+", label: "Years Old", sublabel: "Ancient Wisdom", color: "#8b5cf6" }
+    { value: "10", label: "Mandalas", sublabel: "Sacred Books", color: "#fbbf24" },
+    { value: "1,028", label: "Suktas", sublabel: "Hymns", color: "#14b8a6" },
+    { value: "10,552", label: "Mantras", sublabel: "Verses", color: "#f59e0b" },
+    { value: "3,500+", label: "Years Old", sublabel: "Ancient Wisdom", color: "#0d9488" }
   ];
 
   const renderHomePage = () => (
@@ -114,10 +114,10 @@ function App() {
       <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "4rem 2rem 3rem",
         position: "relative", zIndex: 20 }}>
         <h2 style={{ textAlign: "center", fontSize: "2.5rem", fontWeight: "700",
-          color: "#1e1b4b", marginBottom: "1rem", letterSpacing: "-0.5px" }}>
+          color: "#f8fafc", marginBottom: "1rem", letterSpacing: "-0.5px" }}>
           Explore the Sacred Texts
         </h2>
-        <p style={{ textAlign: "center", fontSize: "1.2rem", color: "#6b7280",
+        <p style={{ textAlign: "center", fontSize: "1.2rem", color: "#cbd5e1",
           maxWidth: "700px", margin: "0 auto 3rem" }}>
           Three powerful ways to discover ancient wisdom
         </p>
@@ -133,8 +133,9 @@ function App() {
           <QuoteCarousel />
         </div>
 
-        <div style={{ background: "white", borderRadius: "24px", padding: "3rem 2rem",
-          boxShadow: "0 10px 40px rgba(0,0,0,0.08)", marginBottom: "4rem" }}>
+        <div style={{ background: "rgba(30, 41, 59, 0.6)", borderRadius: "24px", padding: "3rem 2rem",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.5)", marginBottom: "4rem",
+          border: "1px solid rgba(251, 191, 36, 0.2)", backdropFilter: "blur(20px)" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
             gap: "3rem", textAlign: "center" }}>
             {stats.map((stat, i) => <StatItem key={i} {...stat} />)}
@@ -160,11 +161,11 @@ function App() {
                 { text: "Ask AI Guide", page: "chat", solid: false }].map((btn, i) => (
                 <button key={i} onClick={() => navigateToPage(btn.page)} className={btn.solid ? "btn-shimmer" : ""}
                   style={{ padding: "1rem 2.5rem", fontSize: "1.1rem", fontWeight: "700",
-                    background: btn.solid ? "white" : "rgba(255,255,255,0.1)",
-                    color: btn.solid ? "#1e1b4b" : "white",
-                    border: btn.solid ? "none" : "2px solid white", borderRadius: "50px",
+                    background: btn.solid ? "#fbbf24" : "rgba(251,191,36,0.1)",
+                    color: btn.solid ? "#0f172a" : "#fbbf24",
+                    border: btn.solid ? "none" : "2px solid #fbbf24", borderRadius: "50px",
                     cursor: "pointer", transition: "all 0.3s ease",
-                    boxShadow: btn.solid ? "0 4px 20px rgba(0,0,0,0.2)" : "none",
+                    boxShadow: btn.solid ? "0 4px 20px rgba(251,191,36,0.4)" : "none",
                     backdropFilter: btn.solid ? "none" : "blur(10px)" }}>
                   {btn.text}
                 </button>
@@ -178,12 +179,12 @@ function App() {
 
   return (
     <div style={{ minHeight: "100vh",
-      background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+      background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
-      <header style={{ background: "linear-gradient(135deg, rgba(30, 27, 75, 0.05) 0%, rgba(76, 29, 149, 0.05) 100%)",
-        color: "#1e1b4b", padding: "1.5rem 0", boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
+      <header style={{ background: "rgba(30, 41, 59, 0.8)",
+        color: "#f8fafc", padding: "1.5rem 0", boxShadow: "0 2px 10px rgba(0,0,0,0.5)",
         position: "sticky", top: 0, zIndex: 100, backdropFilter: "blur(10px)",
-        borderBottom: "1px solid rgba(0,0,0,0.05)" }}>
+        borderBottom: "1px solid rgba(251, 191, 36, 0.2)" }}>
         <div style={{ maxWidth: "1400px", margin: "auto", padding: "0 2rem" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
             flexWrap: "wrap", gap: "1rem" }}>

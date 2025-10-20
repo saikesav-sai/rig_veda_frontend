@@ -2,18 +2,18 @@ import { useRef, useState } from "react";
 import { FaPause, FaPlay } from "react-icons/fa";
 import { API_BASE } from "../config";
 
-// Vedic Color Palette
+// 🌙 Midnight Sanskrit - Color Palette
 const VEDIC_COLORS = {
-  deepIndigo: '#1e1b4b', softGold: '#f59e0b', ivoryWhite: '#fefce8',
-  mutedViolet: '#8b5cf6', cosmicBlue: '#3730a3', sacredOrange: '#fb923c',
-  etherealPurple: '#a855f7', earthyBeige: '#fef3c7', divineGlow: 'rgba(245, 158, 11, 0.1)'
+  deepIndigo: '#1e293b', softGold: '#fbbf24', ivoryWhite: '#f8fafc',
+  mutedViolet: '#14b8a6', cosmicBlue: '#334155', sacredOrange: '#f59e0b',
+  etherealPurple: '#0d9488', earthyBeige: '#cbd5e1', divineGlow: 'rgba(251, 191, 36, 0.2)'
 };
 
 const SACRED_GRADIENTS = {
-  cosmic: `linear-gradient(135deg, ${VEDIC_COLORS.deepIndigo} 0%, ${VEDIC_COLORS.cosmicBlue} 50%, ${VEDIC_COLORS.mutedViolet} 100%)`,
+  cosmic: `linear-gradient(135deg, ${VEDIC_COLORS.deepIndigo} 0%, ${VEDIC_COLORS.cosmicBlue} 50%, #0f172a 100%)`,
   divine: `linear-gradient(135deg, ${VEDIC_COLORS.softGold} 0%, ${VEDIC_COLORS.sacredOrange} 100%)`,
-  pure: `linear-gradient(135deg, ${VEDIC_COLORS.ivoryWhite} 0%, #ffffff 100%)`,
-  wisdom: `linear-gradient(135deg, ${VEDIC_COLORS.etherealPurple} 0%, ${VEDIC_COLORS.mutedViolet} 100%)`
+  pure: `linear-gradient(135deg, ${VEDIC_COLORS.deepIndigo} 0%, ${VEDIC_COLORS.cosmicBlue} 100%)`,
+  wisdom: `linear-gradient(135deg, ${VEDIC_COLORS.mutedViolet} 0%, ${VEDIC_COLORS.etherealPurple} 100%)`
 };
 
 // Intent configuration
@@ -23,9 +23,9 @@ const getIntentConfig = (intent) => {
       icon: <img src="/search2.png" alt="Search" style={{ width: "1.2rem", height: "1.2rem", display: "inline-block", verticalAlign: "middle" }} />, symbol: '🌌', title: 'Cosmic Search' },
     verse_lookup: { color: VEDIC_COLORS.sacredOrange, bg: VEDIC_COLORS.earthyBeige,
       icon: <img src="/mantra.png" alt="Mantra" style={{ width: "1.2rem", height: "1.2rem", display: "inline-block", verticalAlign: "middle" }} />, symbol: '🪷', title: 'Sacred Verse' },
-    explanation: { color: VEDIC_COLORS.etherealPurple, bg: '#f3e8ff',
+    explanation: { color: VEDIC_COLORS.etherealPurple, bg: 'rgba(20, 184, 166, 0.1)',
       icon: '💫', symbol: <img src="/om.png" alt="Om" style={{ width: "1.2rem", height: "1.2rem", display: "inline-block", verticalAlign: "middle" }} />, title: 'Divine Wisdom' },
-    general: { color: VEDIC_COLORS.mutedViolet, bg: VEDIC_COLORS.ivoryWhite,
+    general: { color: VEDIC_COLORS.mutedViolet, bg: 'rgba(248, 250, 252, 0.05)',
       icon: <img src="/namaste.png" alt="Namaste" style={{ width: "1.2rem", height: "1.2rem", display: "inline-block", verticalAlign: "middle" }} />, symbol: '✨', title: 'Sacred Dialogue' }
   };
   return configs[intent] || configs.general;
@@ -38,17 +38,17 @@ const SlokaCard = ({ sloka, idx, playingAudio, audioLoading, toggleAudio }) => (
     padding: "1rem", marginBottom: "0.75rem", position: "relative", overflow: "hidden" }}>
     <div style={{ position: "absolute", top: 0, right: 0, width: "40px", height: "40px",
       background: `${VEDIC_COLORS.softGold}10`, borderRadius: "0 12px 0 40px" }} />
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
       marginBottom: "0.5rem", gap: "0.5rem" }}>
-      <div style={{ fontWeight: "600", color: VEDIC_COLORS.cosmicBlue,
+      <div style={{ fontWeight: "600", color: VEDIC_COLORS.softGold,
         fontSize: "0.9rem" }}><img src="/om.png" alt="Om" style={{ width: "1rem", height: "1rem", display: "inline-block", verticalAlign: "middle", marginRight: "0.3rem" }} /> {sloka.location}</div>
       <button onClick={() => toggleAudio(sloka.location)}
         disabled={audioLoading === sloka.location}
         style={{ display: "flex", alignItems: "center", gap: "0.4rem",
           background: playingAudio === sloka.location 
             ? "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)" 
-            : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-          color: "white", border: "none", padding: "0.4rem 0.8rem", borderRadius: "20px",
+            : "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
+          color: playingAudio === sloka.location ? "white" : "#0f172a", border: "none", padding: "0.4rem 0.8rem", borderRadius: "20px",
           fontSize: "0.75rem", fontWeight: "600",
           cursor: audioLoading === sloka.location ? "not-allowed" : "pointer",
           transition: "all 0.2s ease",
@@ -74,7 +74,7 @@ const SlokaCard = ({ sloka, idx, playingAudio, audioLoading, toggleAudio }) => (
       color: VEDIC_COLORS.mutedViolet, marginBottom: "0.5rem",
       fontFamily: "'Noto Serif Devanagari', serif", lineHeight: "1.8",
       textAlign: "center", padding: "0.5rem 0" }}>{sloka.sanskrit}</div>
-    <div style={{ lineHeight: "1.6", color: VEDIC_COLORS.deepIndigo,
+    <div style={{ lineHeight: "1.6", color: VEDIC_COLORS.ivoryWhite,
       fontSize: "0.95rem", fontFamily: "'Crimson Pro', serif" }}>{sloka.meaning}</div>
   </div>
 );
@@ -92,7 +92,7 @@ const Section = ({ title, content, gradient, borderColor }) => (
       <strong style={{ color: title.color, fontFamily: "'Crimson Pro', serif",
         fontSize: "1.1rem" }}>{title.text}</strong>
     </div>
-    <div style={{ lineHeight: "1.7", color: VEDIC_COLORS.deepIndigo,
+    <div style={{ lineHeight: "1.7", color: VEDIC_COLORS.earthyBeige,
       fontFamily: "'Crimson Pro', serif", fontSize: "1.05rem" }}>{content}</div>
   </div>
 );
@@ -147,7 +147,7 @@ export default function ChatBot() {
   const renderChatResponse = (data) => {
     if (typeof data === "string") {
       return <div style={{ fontFamily: "'Crimson Pro', 'Noto Serif', serif",
-        lineHeight: "1.7", color: VEDIC_COLORS.deepIndigo }}>{data}</div>;
+        lineHeight: "1.7", color: VEDIC_COLORS.earthyBeige }}>{data}</div>;
     }
 
     const { answer, slokas } = data;
@@ -170,7 +170,7 @@ export default function ChatBot() {
               marginBottom: "1rem", justifyContent: "center" }}>
               <div style={{ width: "30px", height: "2px", background: SACRED_GRADIENTS.divine }} />
               <span style={{ fontSize: "1.1rem", fontWeight: "600",
-                color: VEDIC_COLORS.deepIndigo, fontFamily: "'Crimson Pro', serif" }}>
+                color: VEDIC_COLORS.softGold, fontFamily: "'Crimson Pro', serif" }}>
                 🪷 Sacred Verses ({slokas.length})
               </span>
               <div style={{ width: "30px", height: "2px", background: SACRED_GRADIENTS.divine }} />
@@ -189,7 +189,7 @@ export default function ChatBot() {
         )}
 
         {answer?.summary && (
-          <Section title={{ icon: <img src="/book.png" alt="Book" style={{ width: "1.5rem", height: "1.5rem", display: "inline-block", verticalAlign: "middle" }} />, text: "Sacred Summary", color: VEDIC_COLORS.cosmicBlue }}
+          <Section title={{ icon: <img src="/book.png" alt="Book" style={{ width: "1.5rem", height: "1.5rem", display: "inline-block", verticalAlign: "middle" }} />, text: "Sacred Summary", color: VEDIC_COLORS.softGold }}
             content={answer.summary} gradient={SACRED_GRADIENTS.pure}
             borderColor={`${VEDIC_COLORS.softGold}40`} />
         )}
@@ -198,14 +198,14 @@ export default function ChatBot() {
           <Section
             title={{ icon: '🔮', text: "Divine Interpretation", color: VEDIC_COLORS.mutedViolet }}
             content={answer.interpretation}
-            gradient="linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%)"
+            gradient={SACRED_GRADIENTS.pure}
             borderColor={`${VEDIC_COLORS.mutedViolet}40`} />
         )}
 
         {answer?.reflection && (
           <Section title={{ icon: '🌟', text: "Cosmic Reflection", color: VEDIC_COLORS.sacredOrange }}
             content={<div style={{ fontStyle: "italic" }}>{answer.reflection}</div>}
-            gradient="linear-gradient(135deg, #fefce8 0%, #fef3c7 100%)"
+            gradient={SACRED_GRADIENTS.pure}
             borderColor={`${VEDIC_COLORS.sacredOrange}40`} />
         )}
       </div>
@@ -240,7 +240,7 @@ export default function ChatBot() {
 
   return (
     <div style={{ minHeight: "100vh",
-      background: "linear-gradient(135deg, #fefce8 0%, #fff7ed 50%, #fef3c7 100%)",
+      background: "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)",
       padding: ".5rem 0", position: "relative", overflow: "hidden" }}>
       {/* Static Mandala Background */}
       <div style={{ position: "absolute", top: "50%", left: "50%",
@@ -249,55 +249,55 @@ export default function ChatBot() {
         <svg viewBox="0 0 600 600" style={{ width: "100%", height: "100%" }}>
           <defs>
             <radialGradient id="mandala-gradient-chat" cx="50%" cy="50%" r="60%">
-              <stop offset="0%" stopColor="#667eea" stopOpacity="0.3" />
-              <stop offset="50%" stopColor="#764ba2" stopOpacity="0.15" />
-              <stop offset="100%" stopColor="#f093fb" stopOpacity="0.05" />
+              <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.3" />
+              <stop offset="50%" stopColor="#14b8a6" stopOpacity="0.15" />
+              <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.05" />
             </radialGradient>
           </defs>
           <circle cx="300" cy="300" r="140" fill="url(#mandala-gradient-chat)" />
           {[...Array(12)].map((_, i) => (
             <ellipse key={i} cx="300" cy="120" rx="40" ry="14"
-              fill="rgba(118,75,162,0.1)"
+              fill="rgba(251,191,36,0.1)"
               transform={`rotate(${(i / 12) * 360} 300 300)`} />
           ))}
         </svg>
       </div>
 
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 .5rem",
+      <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 .5rem",
         position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: "1rem" }}>
-          <h2 style={{ fontSize: "3.5rem", fontWeight: "700", color: "#1e1b4b",
+          <h2 style={{ fontSize: "3.5rem", fontWeight: "700", color: "#fbbf24",
             marginBottom: "1rem" }}>Sacred Wisdom Guide</h2>
-          <p style={{ color: "#475569", fontSize: "1.2rem", lineHeight: "1",
+          <p style={{ color: "#cbd5e1", fontSize: "1.2rem", lineHeight: "1",
             fontWeight: "400", maxWidth: "500px", margin: "0 auto" }}>
             Discover the Eternal Wisdom of the Rig Veda through intelligent conversation
           </p>
         </div>
 
-        <div style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(254,252,232,0.95))",
+        <div style={{ background: "linear-gradient(135deg, rgba(30,41,59,0.98), rgba(51,65,85,0.95))",
           borderRadius: "24px", overflow: "hidden",
-          boxShadow: "0 15px 50px rgba(102,126,234,0.15)",
-          border: "2px solid rgba(102,126,234,0.15)", backdropFilter: "blur(10px)" }}>
+          boxShadow: "0 15px 50px rgba(251,191,36,0.15)",
+          border: "2px solid rgba(251,191,36,0.15)", backdropFilter: "blur(10px)" }}>
           <div style={{ padding: "1rem", minHeight: "500px", maxHeight: "600px",
             display: "flex", flexDirection: "column", gap: ".5rem" }}>
             <div style={{ flex: 1, overflowY: "auto", padding: "0.5rem",
               scrollbarWidth: "thin", scrollbarColor: `${VEDIC_COLORS.softGold} transparent` }}>
               {chatMessages.length === 0 && (
                 <div style={{ textAlign: "center", marginTop: "1rem", padding: "3rem 2rem",
-                  background: "linear-gradient(135deg, rgba(255,255,255,0.9), rgba(254,252,232,0.9))",
-                  borderRadius: "20px", border: "2px dashed rgba(102,126,234,0.3)",
+                  background: "linear-gradient(135deg, rgba(30,41,59,0.9), rgba(51,65,85,0.9))",
+                  borderRadius: "20px", border: "2px dashed rgba(251,191,36,0.3)",
                   position: "relative", overflow: "hidden" }}>
                   <div style={{ position: "relative", zIndex: 2 }}>
                     <div style={{ fontSize: "3rem", marginBottom: "1rem",
-                      filter: "drop-shadow(0 0 20px rgba(245, 158, 11, 0.3))" }}>🪷</div>
+                      filter: "drop-shadow(0 0 20px rgba(251, 191, 36, 0.3))" }}>🪷</div>
                     <div style={{ fontWeight: "700", marginBottom: "1rem",
-                      color: VEDIC_COLORS.deepIndigo, fontSize: "1.5rem",
+                      color: "#fbbf24", fontSize: "1.5rem",
                       fontFamily: "'Crimson Pro', serif" }}>Welcome, Seeker of Wisdom</div>
-                    <div style={{ fontSize: "1.1rem", color: VEDIC_COLORS.mutedViolet,
+                    <div style={{ fontSize: "1.1rem", color: "#14b8a6",
                       fontFamily: "'Inter', sans-serif", lineHeight: "1.8" }}>
                       Ask about sacred hymns, cosmic themes, or divine concepts...
                       <br />
-                      <span style={{ fontSize: "1rem", fontStyle: "italic", color: "#6b7280" }}>
+                      <span style={{ fontSize: "1rem", fontStyle: "italic", color: "#94a3b8" }}>
                         "What is Agni's cosmic role?" • "Explain the creation hymn 10.12.9"
                       </span>
                     </div>
@@ -311,22 +311,22 @@ export default function ChatBot() {
                     marginBottom: "1.5rem", animation: "messageAppear 0.5s ease-out" }}>
                   <div style={{
                     background: m.type === "user" 
-                      ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" : "white",
-                    color: m.type === "user" ? "white" : VEDIC_COLORS.deepIndigo,
+                      ? "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)" : "rgba(30,41,59,0.6)",
+                    color: m.type === "user" ? "#0f172a" : "#f8fafc",
                     border: m.type === "user" 
-                      ? "2px solid rgba(102,126,234,0.3)" : "2px solid rgba(102,126,234,0.15)",
+                      ? "2px solid rgba(251,191,36,0.3)" : "2px solid rgba(251,191,36,0.15)",
                     padding: "1.25rem 1.75rem",
                     borderRadius: m.type === "user" ? "24px 24px 6px 24px" : "24px 24px 24px 6px",
                     maxWidth: "85%", whiteSpace: "pre-wrap",
                     boxShadow: m.type === "user"
-                      ? "0 10px 30px rgba(102,126,234,0.3)" : "0 10px 30px rgba(0,0,0,0.08)",
+                      ? "0 10px 30px rgba(251,191,36,0.3)" : "0 10px 30px rgba(0,0,0,0.3)",
                     fontFamily: m.type === "user" ? "'Inter', sans-serif" : "'Crimson Pro', serif",
                     fontSize: "1.05rem", lineHeight: "1.7", position: "relative",
                     overflow: "hidden", fontWeight: m.type === "user" ? "500" : "400" }}>
                     {m.type === "assistant" && (
                       <div style={{ position: "absolute", top: 0, left: 0, right: 0,
                         height: "3px",
-                        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" }} />
+                        background: "linear-gradient(135deg, #fbbf24 0%, #14b8a6 100%)" }} />
                     )}
                     <div style={{ position: "relative", zIndex: 2 }}>
                       {m.type === "user" ? m.text : renderChatResponse(m.data || m.text)}
@@ -337,10 +337,10 @@ export default function ChatBot() {
               
               {chatLoading && (
                 <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: "1.5rem" }}>
-                  <div style={{ background: "white",
-                    border: "2px solid rgba(102,126,234,0.15)", padding: "1.25rem 1.75rem",
+                  <div style={{ background: "rgba(30,41,59,0.6)",
+                    border: "2px solid rgba(251,191,36,0.15)", padding: "1.25rem 1.75rem",
                     borderRadius: "24px 24px 24px 6px",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.08)", display: "flex",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.3)", display: "flex",
                     alignItems: "center", gap: "0.75rem" }}>
                     {[0, 0.2, 0.4].map((delay, i) => (
                       <div key={i} style={{ width: "10px", height: "10px", borderRadius: "50%",
@@ -348,7 +348,7 @@ export default function ChatBot() {
                           VEDIC_COLORS.sacredOrange][i],
                         animation: `sacredPulse 1.5s ease-in-out infinite ${delay}s` }} />
                     ))}
-                    <span style={{ color: VEDIC_COLORS.mutedViolet, fontStyle: "italic",
+                    <span style={{ color: "#14b8a6", fontStyle: "italic",
                       fontSize: "1rem", fontWeight: "500" }}>Channeling wisdom...</span>
                   </div>
                 </div>
@@ -356,8 +356,8 @@ export default function ChatBot() {
             </div>
 
             {error && (
-              <div style={{ color: "#dc2626", textAlign: "center",
-                background: "linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.05))",
+              <div style={{ color: "#ef4444", textAlign: "center",
+                background: "linear-gradient(135deg, rgba(239,68,68,0.15), rgba(220,38,38,0.1))",
                 border: "2px solid rgba(239,68,68,0.3)", borderRadius: "16px",
                 padding: "1.25rem", fontFamily: "'Inter', sans-serif", fontWeight: "600",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
@@ -366,43 +366,43 @@ export default function ChatBot() {
             )}
 
             <div style={{ display: "flex", gap: "1rem", padding: "1.25rem",
-              background: "white", borderRadius: "20px",
-              border: "2px solid rgba(102,126,234,0.2)",
-              boxShadow: "0 8px 32px rgba(102,126,234,0.1)", position: "relative",
+              background: "rgba(30,41,59,0.6)", borderRadius: "20px",
+              border: "2px solid rgba(251,191,36,0.2)",
+              boxShadow: "0 8px 32px rgba(251,191,36,0.1)", position: "relative",
               overflow: "hidden" }}>
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px",
-                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                background: "linear-gradient(135deg, #fbbf24 0%, #14b8a6 100%)",
                 opacity: chatInput.trim() ? 1 : 0, transition: "opacity 0.3s ease" }} />
               <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "0.75rem" }}>
                 <img src="/namaste.png" alt="Namaste" style={{ fontSize: "1.3rem", width: "1.5rem", height: "1.5rem",
-                  filter: "drop-shadow(0 0 8px rgba(245, 158, 11, 0.3))" }} />
+                  filter: "drop-shadow(0 0 8px rgba(251, 191, 36, 0.3))" }} />
                 <input type="text" value={chatInput} onChange={(e) => setChatInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleChatSend()}
                   placeholder="Ask about hymns, themes, or cosmic concepts..."
                   style={{ flex: 1, padding: "0.75rem 0", border: "none", outline: "none",
                     fontSize: "1.05rem", fontFamily: "'Inter', sans-serif",
-                    color: VEDIC_COLORS.deepIndigo, background: "transparent", fontWeight: "500" }} />
+                    color: "#f8fafc", background: "transparent", fontWeight: "500" }} />
               </div>
               <button onClick={handleChatSend} disabled={chatLoading || !chatInput.trim()}
-                style={{ background: (chatLoading || !chatInput.trim()) ? "#9ca3af" 
-                    : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                  color: "white", border: "none", borderRadius: "50px", padding: "1rem 2rem",
+                style={{ background: (chatLoading || !chatInput.trim()) ? "#64748b" 
+                    : "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
+                  color: (chatLoading || !chatInput.trim()) ? "#cbd5e1" : "#0f172a", border: "none", borderRadius: "50px", padding: "1rem 2rem",
                   cursor: (chatLoading || !chatInput.trim()) ? "not-allowed" : "pointer",
                   fontWeight: "700", transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                   boxShadow: (chatLoading || !chatInput.trim()) ? "none" 
-                    : "0 10px 30px rgba(102,126,234,0.3)",
+                    : "0 10px 30px rgba(251,191,36,0.3)",
                   display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "1rem",
                   whiteSpace: "nowrap" }}
                 onMouseEnter={(e) => {
                   if (!chatLoading && chatInput.trim()) {
                     e.target.style.transform = "translateY(-3px)";
-                    e.target.style.boxShadow = "0 15px 40px rgba(102,126,234,0.4)";
+                    e.target.style.boxShadow = "0 15px 40px rgba(251,191,36,0.4)";
                   }
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.transform = "translateY(0)";
                   e.target.style.boxShadow = (chatLoading || !chatInput.trim()) 
-                    ? "none" : "0 10px 30px rgba(102,126,234,0.3)";
+                    ? "none" : "0 10px 30px rgba(251,191,36,0.3)";
                 }}>
                 {chatLoading ? <><span>🔄</span><span>Seeking...</span></> 
                   : <><span>✨</span><span>Send</span></>}

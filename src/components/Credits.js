@@ -24,33 +24,13 @@ const Credits = () => {
     
     
     
-    {
-      title: "Development Team",
-      icon: "👥",
-      items: [
-        {
-          name: "Project Creator",
-          description: "Eternal Veda development team",
-          link: null
-        },
-        {
-          name: "GitHub Contributors",
-          description: "Open-source contributors who helped improve the platform",
-          link: "https://github.com/"
-        },
-        {
-          name: "Beta Testers",
-          description: "Community members who provided valuable feedback",
-          link: null
-        }
-      ]
-    }
+    
   ];
 
   return (
     <div style={{
       minHeight: "100vh",
-      background: "linear-gradient(135deg, #fefce8 0%, #fff7ed 50%, #fef3c7 100%)",
+      background: "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)",
       padding: "2rem 1rem"
     }}>
       <div style={{
@@ -64,8 +44,8 @@ const Credits = () => {
             padding: "0.75rem 1.5rem",
             fontSize: "1rem",
             fontWeight: "600",
-            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-            color: "white",
+            background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
+            color: "#0f172a",
             border: "none",
             borderRadius: "50px",
             cursor: "pointer",
@@ -81,22 +61,22 @@ const Credits = () => {
         <div style={{
           textAlign: "center",
           marginBottom: "3rem",
-          background: "white",
+          background: "linear-gradient(135deg, #1e293b 0%, #334155 100%)",
           borderRadius: "24px",
-          padding: "3rem 2rem",
-          boxShadow: "0 10px 40px rgba(0,0,0,0.1)"
+          padding: "2rem 1rem",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.5)"
         }}>
           <img src="/om.png" alt="Om" style={{ width: "5rem", height: "5rem", marginBottom: "1rem" }} />
           <h1 style={{
             fontSize: "3rem",
             fontWeight: "700",
-            color: "#1e1b4b",
+            color: "#fbbf24",
             marginBottom: "1rem"
           }}>
             Credits & Acknowledgments
           </h1>
           <p style={{
-            color: "#6b7280",
+            color: "#cbd5e1",
             fontSize: "1.2rem",
             maxWidth: "700px",
             margin: "0 auto"
@@ -117,13 +97,12 @@ const Credits = () => {
             <div
               key={idx}
               style={{
-                background: "white",
+                background: "rgba(30,41,59,0.95)",
                 borderRadius: "20px",
                 padding: "2rem",
-                boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
+                boxShadow: "0 8px 30px rgba(0,0,0,0.5)",
                 transition: "all 0.3s ease"
               }}
-              className="card-hover"
             >
               <div style={{
                 fontSize: "3rem",
@@ -135,7 +114,7 @@ const Credits = () => {
               <h2 style={{
                 fontSize: "1.5rem",
                 fontWeight: "700",
-                color: "#1e1b4b",
+                color: "#fbbf24",
                 marginBottom: "1.5rem",
                 textAlign: "center"
               }}>
@@ -147,22 +126,22 @@ const Credits = () => {
                     key={itemIdx}
                     style={{
                       padding: "1rem",
-                      background: "linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%)",
+                      background: "linear-gradient(135deg, rgba(251,191,36,0.1) 0%, rgba(245,158,11,0.1) 100%)",
                       borderRadius: "12px",
-                      borderLeft: "4px solid #667eea"
+                      borderLeft: "4px solid #fbbf24"
                     }}
                   >
                     <h3 style={{
                       fontSize: "1.1rem",
                       fontWeight: "600",
-                      color: "#4c1d95",
+                      color: "#fbbf24",
                       marginBottom: "0.5rem"
                     }}>
                       {item.name}
                     </h3>
                     <p style={{
                       fontSize: "0.95rem",
-                      color: "#6b7280",
+                      color: "#cbd5e1",
                       marginBottom: item.link ? "0.5rem" : "0"
                     }}>
                       {item.description}
@@ -174,7 +153,7 @@ const Credits = () => {
                         rel="noopener noreferrer"
                         style={{
                           fontSize: "0.9rem",
-                          color: "#667eea",
+                          color: "#14b8a6",
                           textDecoration: "none",
                           fontWeight: "600"
                         }}
@@ -191,17 +170,19 @@ const Credits = () => {
 
         {/* Special Thanks Section */}
         <div style={{
-          background: "linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%)",
+          background: "linear-gradient(135deg, #1e293b 0%, #334155 100%)",
           borderRadius: "24px",
           padding: "3rem 2rem",
           textAlign: "center",
           color: "white",
-          boxShadow: "0 15px 50px rgba(0,0,0,0.2)"
+          boxShadow: "0 15px 50px rgba(0,0,0,0.6)",
+          border: "2px solid rgba(251,191,36,0.3)"
         }}>
           <h2 style={{
             fontSize: "2rem",
             fontWeight: "700",
-            marginBottom: "1rem"
+            marginBottom: "1rem",
+            color: "#fbbf24"
           }}>
             🙏 Special Thanks
           </h2>
@@ -210,7 +191,8 @@ const Credits = () => {
             lineHeight: "1.8",
             maxWidth: "800px",
             margin: "0 auto 1.5rem",
-            opacity: 0.9
+            opacity: 0.9,
+            color: "#cbd5e1"
           }}>
             This project would not have been possible without the tireless efforts of Vedic scholars,
             translators, and technologists who have dedicated their lives to preserving and sharing
@@ -260,22 +242,23 @@ const Credits = () => {
 
         {/* License Information */}
         <div style={{
-          background: "white",
+          background: "rgba(30,41,59,0.95)",
           borderRadius: "20px",
           padding: "2rem",
           marginTop: "2rem",
-          boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
-          textAlign: "center"
+          boxShadow: "0 8px 30px rgba(0,0,0,0.5)",
+          textAlign: "center",
+          border: "2px solid rgba(251,191,36,0.2)"
         }}>
           <h3 style={{
             fontSize: "1.3rem",
             fontWeight: "600",
-            color: "#1e1b4b",
+            color: "#fbbf24",
             marginBottom: "1rem"
           }}>
             📜 License Information
           </h3>
-          <p style={{ color: "#6b7280", lineHeight: "1.8", fontSize: "1rem" }}>
+          <p style={{ color: "#cbd5e1", lineHeight: "1.8", fontSize: "1rem" }}>
             This project uses open-source software and public domain texts. The Rig Veda texts
             and translations are in the public domain. Modern software components are used under
             their respective licenses (MIT, Apache 2.0, etc.). All audio recordings are used with

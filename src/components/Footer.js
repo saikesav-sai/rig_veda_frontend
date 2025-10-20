@@ -5,10 +5,11 @@ const Footer = () => {
 
   return (
     <footer style={{
-      background: "linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%)",
+      background: "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)",
       color: "white",
       padding: "3rem 2rem 1.5rem",
-      marginTop: "4rem"
+      marginTop: "4rem",
+      borderTop: "2px solid rgba(251,191,36,0.2)"
     }}>
       <div style={{
         maxWidth: "1400px",
