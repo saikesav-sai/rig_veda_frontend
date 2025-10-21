@@ -1,8 +1,7 @@
 import { useRef, useState } from "react";
 import { FaPause, FaPlay } from "react-icons/fa";
-import { API_BASE } from "../config";
+import { API_BASE, API_KEY } from "../config";
 
-// 🌙 Midnight Sanskrit - Color Palette
 const VEDIC_COLORS = {
   deepIndigo: '#1e293b', softGold: '#fbbf24', ivoryWhite: '#f8fafc',
   mutedViolet: '#14b8a6', cosmicBlue: '#334155', sacredOrange: '#f59e0b',
@@ -16,7 +15,6 @@ const SACRED_GRADIENTS = {
   wisdom: `linear-gradient(135deg, ${VEDIC_COLORS.mutedViolet} 0%, ${VEDIC_COLORS.etherealPurple} 100%)`
 };
 
-// Intent configuration
 const getIntentConfig = (intent) => {
   const configs = {
     semantic_search: { color: VEDIC_COLORS.cosmicBlue, bg: VEDIC_COLORS.divineGlow,
@@ -31,7 +29,6 @@ const getIntentConfig = (intent) => {
   return configs[intent] || configs.general;
 };
 
-// Sloka card component
 const SlokaCard = ({ sloka, idx, playingAudio, audioLoading, toggleAudio }) => (
   <div key={idx} style={{ background: SACRED_GRADIENTS.pure,
     border: `1px solid ${VEDIC_COLORS.softGold}30`, borderRadius: "12px",
@@ -70,7 +67,7 @@ const SlokaCard = ({ sloka, idx, playingAudio, audioLoading, toggleAudio }) => (
       </button>
     </div>
     <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
-    <div className="sanskrit-text" style={{ fontSize: "1rem", fontStyle: "italic",
+    <div className="sanskrit-text" style={{ fontSize: "1.5rem", fontStyle: "italic",
       color: VEDIC_COLORS.mutedViolet, marginBottom: "0.5rem",
       fontFamily: "'Noto Serif Devanagari', serif", lineHeight: "1.8",
       textAlign: "center", padding: "0.5rem 0" }}>{sloka.sanskrit}</div>
@@ -223,7 +220,10 @@ export default function ChatBot() {
     try {
       const resp = await fetch(`${API_BASE.replace(/\/$/, "")}/chat/intent`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "X-API-Key": API_KEY
+        },
         body: JSON.stringify({ query: userMessage }),
       });
       const data = await resp.json();
@@ -298,7 +298,7 @@ export default function ChatBot() {
                       Ask about sacred hymns, cosmic themes, or divine concepts...
                       <br />
                       <span style={{ fontSize: "1rem", fontStyle: "italic", color: "#94a3b8" }}>
-                        "What is Agni's cosmic role?" • "Explain the creation hymn 10.12.9"
+                        "Give me slokas about life" • "Explain the hymn 10.12.9"
                       </span>
                     </div>
                   </div>

@@ -1,10 +1,5 @@
 FROM node:18-alpine
 
-# Install dependencies for cloudflared
-# RUN apk add --no-cache wget && \
-#     wget -O /usr/local/bin/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 && \
-#     chmod +x /usr/local/bin/cloudflared
-
 # Set work directory
 WORKDIR /app
 

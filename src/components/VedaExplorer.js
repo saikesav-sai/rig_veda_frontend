@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FaBolt, FaBookOpen, FaCheck, FaChevronDown, FaChevronUp, FaCompress, FaExpand, FaGripHorizontal, FaQuoteLeft, FaSearch } from "react-icons/fa";
-import { API_BASE } from "../config";
+import { API_BASE, API_KEY } from "../config";
 
 // Common styles
 const STYLES = {
@@ -196,7 +196,9 @@ export default function VedaExplorer() {
   useEffect(() => {
     if (!mandalaNum) return;
     setLoading(true);
-    fetch(`${API_BASE}/index/${mandalaNum}`)
+    fetch(`${API_BASE}/index/${mandalaNum}`, {
+      headers: { "X-API-Key": API_KEY }
+    })
       .then(r => r.json())
       .then(data => {
         setIndexData(data.error ? null : data);
@@ -209,7 +211,9 @@ export default function VedaExplorer() {
   const handleSearch = () => {
     if (!mandalaNum || !hymnNum || !stanzaNum) return setError("Please fill all fields");
     setLoading(true);
-    fetch(`${API_BASE}/sloka/${mandalaNum}/${hymnNum}/${stanzaNum}`)
+    fetch(`${API_BASE}/sloka/${mandalaNum}/${hymnNum}/${stanzaNum}`, {
+      headers: { "X-API-Key": API_KEY }
+    })
       .then(r => r.json())
       .then(data => {
         setSloka(data.error ? null : data);
@@ -267,7 +271,9 @@ export default function VedaExplorer() {
       setPlaying(false);
       
       setLoading(true);
-      fetch(`${API_BASE}/sloka/${mandalaNum}/${hymnNum}/${currentStanza + 1}`)
+      fetch(`${API_BASE}/sloka/${mandalaNum}/${hymnNum}/${currentStanza + 1}`, {
+        headers: { "X-API-Key": API_KEY }
+      })
         .then(r => r.json())
         .then(data => {
           setSloka(data.error ? null : data);

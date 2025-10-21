@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaDice, FaSearch } from "react-icons/fa";
-import { API_BASE } from "../config";
+import { API_BASE, API_KEY } from "../config";
 import SearchResults from "./SearchResults";
 
 // Example searches
@@ -117,7 +117,9 @@ export default function SemanticSearch({ onResults }) {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${API_BASE}/semantic/random`);
+      const response = await fetch(`${API_BASE}/semantic/random`, {
+        headers: { "X-API-Key": API_KEY }
+      });
       const data = await response.json();
       if (data.error) {
         setError(data.error);
@@ -153,7 +155,10 @@ export default function SemanticSearch({ onResults }) {
       
       const response = await fetch(`${API_BASE}/semantic/search`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-API-Key': API_KEY
+        },
         body: JSON.stringify({ query, top_k: 50 }),
       });
       
