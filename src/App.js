@@ -9,7 +9,7 @@ import PrivacyPolicy from "./components/PrivacyPolicy";
 import QuoteCarousel from "./components/QuoteCarousel";
 import SemanticSearch from "./components/SemanticSearch";
 import VedaExplorer from "./components/VedaExplorer";
-console.log("Backup Server");
+console.log("Primary Server");
 
 // 🌙 Midnight Sanskrit - Unique Color Palette
 const GRADIENTS = {
